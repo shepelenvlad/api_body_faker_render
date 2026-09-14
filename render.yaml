@@ -10,7 +10,7 @@ services:
   - type: web
     runtime: static
     name: json-body-generator-ui
-    buildCommand: cd frontend && npm ci && npm run build
+    buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
     routes:
       - type: rewrite
