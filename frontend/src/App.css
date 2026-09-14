@@ -70,6 +70,11 @@ button:disabled {
   padding: 16px;
   position: relative;
 }
+.result button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
 
 .result pre {
   white-space: pre-wrap;

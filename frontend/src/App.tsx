@@ -64,8 +64,8 @@ function App() {
 
       {result && (
         <div className="result">
-          <pre>{result}</pre>
           <button onClick={handleCopy}>{copied ? 'Скопировано!' : 'Скопировать'}</button>
+          <pre>{result}</pre>
         </div>
       )}
     </div>
