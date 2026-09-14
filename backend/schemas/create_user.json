@@ -1,0 +1,14 @@
+{
+  "title": "Create User",
+  "description": "Тело запроса для создания пользователя",
+  "type": "object",
+  "properties": {
+    "first_name": { "type": "string" },
+    "last_name": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "age": { "type": "integer", "minimum": 18, "maximum": 65 },
+    "role": { "type": "string", "enum": ["admin", "user", "guest"] },
+    "is_active": { "type": "boolean" }
+  },
+  "required": ["first_name", "last_name", "email"]
+}

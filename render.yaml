@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: json-body-generator-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+
+  - type: web
+    runtime: static
+    name: json-body-generator-ui
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      # Публичный URL бэкенда предсказуем: https://<name-бэкенда>.onrender.com
+      # Если меняешь name сервиса api выше — поправь и здесь.
+      - key: VITE_API_URL
+        value: https://json-body-generator-api.onrender.com
