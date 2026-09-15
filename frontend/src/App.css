@@ -24,10 +24,37 @@ h1 {
   margin-top: 0;
 }
 
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 24px;
+  border-bottom: 1px solid #333;
+}
+
+.tab {
+  font-size: 14px;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #999;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.tab:hover {
+  color: #e8e8e8;
+}
+
+.tab-active {
+  color: #e8e8e8;
+  border-bottom-color: #3b82f6;
+}
+
 .controls {
   display: flex;
   gap: 12px;
-  margin: 24px 0 8px;
+  margin: 16px 0 8px;
 }
 
 select,
@@ -70,6 +97,7 @@ button:disabled {
   padding: 16px;
   position: relative;
 }
+
 .result button {
     position: absolute;
     top: 15px;

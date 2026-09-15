@@ -45,6 +45,7 @@ _FIELD_NAME_GENERATORS: list[tuple[re.Pattern, Any]] = [
     (re.compile(r"longitude", re.I), lambda: str(fake.longitude())),
     (re.compile(r"elevation", re.I), lambda: str(round(random.uniform(0, 500), 6))),
     (re.compile(r"^token$", re.I), lambda: ".".join(fake.lexify("?" * 20) for _ in range(3))),
+    (re.compile(r"cadastral", re.I), lambda: fake.numerify("##########:##:###:####")),
 ]
 
 _FORMAT_GENERATORS = {
@@ -163,9 +164,27 @@ def _fix_date_range(obj: dict) -> None:
     obj["dateTill"] = date_till.isoformat()
 
 
+def _reapply_conditional(item: dict, schema: dict) -> None:
+    """После того как uniqueBy вручную поменял поле, от которого зависит
+    if/then/else этого же объекта, — пересчитывает зависимые свойства
+    заново (иначе, например, scheme поменяется, а id останется от старой
+    scheme, взятый ещё до подмены)."""
+    if_schema = schema.get("if")
+    if not if_schema:
+        return
+    if _condition_matches(item, if_schema):
+        then_schema = schema.get("then", {})
+        for name, sub_schema in then_schema.get("properties", {}).items():
+            item[name] = generate_from_schema(sub_schema, field_name=name)
+    elif "else" in schema:
+        else_schema = schema["else"]
+        for name, sub_schema in else_schema.get("properties", {}).items():
+            item[name] = generate_from_schema(sub_schema, field_name=name)
+
+
 def _assign_unique_field(items: list, item_schema: dict, field_name: str) -> None:
     """Поддержка кастомного ключа массива "uniqueBy": <имя поля>.
-    Раздаёт значения из enum этого поля по элементам без повторов
+    Раздаёт значення из enum этого поля по элементам без повторов
     (пока элементов не больше, чем вариантов в enum)."""
     field_schema = item_schema.get("properties", {}).get(field_name, {})
     choices = field_schema.get("enum")
@@ -177,6 +196,7 @@ def _assign_unique_field(items: list, item_schema: dict, field_name: str) -> Non
         if not isinstance(item, dict):
             continue
         item[field_name] = pool[i] if i < len(pool) else random.choice(choices)
+        _reapply_conditional(item, item_schema)
 
 
 def _ensure_required_values(items: list, field_name: str, required_values: list) -> None:
@@ -223,6 +243,18 @@ def generate_from_schema(schema: dict, field_name: str = "") -> Any:
         elif if_schema and "else" in schema:
             else_schema = schema["else"]
             result = _generate_properties(else_schema.get("properties", {}), base=result)
+
+        # "conditionals" — список независимых if/then/else-правил на одном
+        # объекте (обычный "if" поддерживает только одно условие за раз,
+        # а бывает нужно несколько пар вида hasX -> X одновременно).
+        for rule in schema.get("conditionals", []):
+            rule_if = rule.get("if", {})
+            if _condition_matches(result, rule_if):
+                then_schema = rule.get("then", {})
+                result = _generate_properties(then_schema.get("properties", {}), base=result)
+            elif "else" in rule:
+                else_schema = rule["else"]
+                result = _generate_properties(else_schema.get("properties", {}), base=result)
 
         _fix_date_range(result)
         _fix_discount_tender_attempts(result)
