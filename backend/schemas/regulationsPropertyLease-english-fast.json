@@ -1,0 +1,416 @@
+{
+  "title": "Regulations Property Lease — English Fast",
+  "description": "Лот оренди цілісних майнових комплексів за регуляторними ставками (regulationsPropertyLease-english-fast)",
+  "type": "object",
+  "properties": {
+    "sellingMethod": { "const": "regulationsPropertyLease-english-fast" },
+
+    "auctionPeriod": {
+      "type": "object",
+      "properties": {
+        "startDate": { "type": "string", "relativeHours": { "min": 24, "max": 72 } }
+      },
+      "required": ["startDate"]
+    },
+
+    "lotId": { "example": "UA-PS-19991212-00000" },
+
+    "sellingEntity": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "object",
+          "properties": {
+            "id": { "example": "09302607" },
+            "legalName": {
+              "type": "object",
+              "properties": { "uk_UA": { "type": "string", "minLength": 10, "maxLength": 100 } }
+            },
+            "scheme": { "const": "UA-EDR" }
+          },
+          "required": ["id", "legalName", "scheme"]
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "streetAddress": {
+              "type": "object",
+              "properties": { "uk_UA": { "type": "string", "minLength": 10, "maxLength": 60 } }
+            },
+            "locality": {
+              "type": "object",
+              "properties": { "uk_UA": { "type": "string", "minLength": 3, "maxLength": 30 } }
+            },
+            "region": {
+              "type": "object",
+              "properties": { "uk_UA": { "type": "string", "enum": ["Автономна Республіка Крим", "Вінницька область", "Волинська область", "Дніпропетровська область", "Донецька область", "Житомирська область", "Закарпатська область", "Запорізька область", "Івано-Франківська область", "Київська область", "Київ", "Кіровоградська область", "Луганська область", "Львівська область", "Миколаївська область", "Одеська область", "Полтавська область", "Рівненська область", "Севастополь", "Сумська область", "Тернопільська область", "Харківська область", "Херсонська область", "Хмельницька область", "Черкаська область", "Чернівецька область", "Чернігівська область"] } }
+            },
+            "countryName": {
+              "type": "object",
+              "properties": { "uk_UA": { "const": "Україна" } }
+            },
+            "postalCode": { "type": "string", "minLength": 5, "maxLength": 5 }
+          }
+        },
+        "contactPoint": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "object",
+              "properties": { "uk_UA": { "type": "string" } }
+            },
+            "telephone": { "type": "string", "format": "phone" },
+            "faxNumber": { "type": "string", "format": "phone" },
+            "email": { "type": "string", "format": "email" }
+          }
+        },
+        "representativeInfo": { "type": "string", "minLength": 20, "maxLength": 100 }
+      }
+    },
+
+    "title": {
+      "type": "object",
+      "properties": { "uk_UA": { "type": "string", "minLength": 15, "maxLength": 120 } }
+    },
+    "description": {
+      "type": "object",
+      "properties": { "uk_UA": { "type": "string", "minLength": 15, "maxLength": 200 } }
+    },
+    "accessDetails": {
+      "type": "object",
+      "properties": {
+        "uk_UA": { "type": "string", "minLength": 10, "maxLength": 100 },
+        "en_US": { "type": "string", "default": "" }
+      }
+    },
+
+    "bankAccounts": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueBy": "accountType",
+      "items": {
+        "type": "object",
+        "properties": {
+          "accountType": { "type": "string", "enum": ["registrationFee", "guarantee", "organizer", "lease"] },
+          "accounts": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "bankName": {
+                  "type": "object",
+                  "properties": { "uk_UA": { "type": "string", "minLength": 5, "maxLength": 40 } }
+                },
+                "description": {
+                  "type": "object",
+                  "properties": { "uk_UA": { "type": "string", "minLength": 10, "maxLength": 80 } }
+                },
+                "paymentPurpose": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": { "type": "string", "minLength": 10, "maxLength": 60 },
+                    "en_US": { "type": "string", "minLength": 5, "maxLength": 40 }
+                  }
+                },
+                "accountIdentifications": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "example": "UA111111111111111111111111111" },
+                      "scheme": { "const": "UA-IBAN" }
+                    }
+                  }
+                },
+                "currency": { "const": "UAH" },
+                "accountHolder": {
+                  "type": "object",
+                  "properties": {
+                    "identifier": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "example": "account holder id" },
+                        "scheme": { "const": "AE-ACCI" },
+                        "legalName": {
+                          "type": "object",
+                          "properties": { "uk_UA": { "type": "string", "minLength": 10, "maxLength": 60 } }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "schedule": {
+      "type": "object",
+      "properties": {
+        "hoursBy": {
+          "type": "object",
+          "properties": {
+            "value": { "type": "integer", "minimum": 1, "maximum": 23 },
+            "by": { "const": "day" }
+          }
+        },
+        "daysBy": {
+          "type": "object",
+          "properties": {
+            "value": { "type": "integer", "minimum": 1, "maximum": 28 },
+            "by": { "const": "month" }
+          }
+        },
+        "period": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "startDate": { "type": "string", "format": "date-time" },
+              "endDate": { "type": "string", "format": "date-time" },
+              "weekdays": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "startTime": { "example": "09:00" },
+                    "endTime": { "example": "18:00" },
+                    "weekday": {
+                      "type": "object",
+                      "properties": {
+                        "uk_UA": { "type": "string", "enum": ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"] }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "x_documentRequirements": {
+      "type": "object",
+      "properties": { "uk_UA": { "type": "string", "minLength": 10, "maxLength": 100 } }
+    },
+    "x_additionalInformation": {
+      "type": "object",
+      "properties": { "uk_UA": { "type": "string", "minLength": 10, "maxLength": 100 } }
+    },
+
+    "value": {
+      "type": "object",
+      "properties": {
+        "currency": { "const": "UAH" },
+        "amount": { "type": "number", "minimum": 100, "maximum": 500000 },
+        "valueAddedTaxIncluded": { "type": "boolean" }
+      },
+      "required": ["currency", "amount"]
+    },
+    "valueAddedTaxCharged": { "type": "boolean" },
+    "valuePeriod": { "type": "string", "enum": ["hour", "day", "month", "year"] },
+    "leaseDuration": { "example": "P2Y11M" },
+    "guarantee": {
+      "type": "object",
+      "properties": {
+        "currency": { "const": "UAH" },
+        "amount": { "type": "number", "minimum": 50, "maximum": 5000 }
+      }
+    },
+    "registrationFee": {
+      "type": "object",
+      "properties": {
+        "currency": { "const": "UAH" },
+        "amount": { "type": "number", "minimum": 1, "maximum": 100 }
+      }
+    },
+    "minimalStep": {
+      "type": "object",
+      "properties": {
+        "currency": { "const": "UAH" },
+        "amount": { "type": "number", "minimum": 1, "maximum": 1000 }
+      }
+    },
+    "minNumberOfQualifiedBids": { "type": "integer", "minimum": 1, "maximum": 2 },
+    "tenderAttempts": { "type": "integer", "enum": [1, 2] },
+
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "object",
+            "properties": {
+              "uk_UA": { "type": "string", "minLength": 15, "maxLength": 100 },
+              "en_US": { "type": "string", "default": "" }
+            }
+          },
+          "quantity": { "type": "string", "minLength": 1, "maxLength": 4 },
+          "classification": {
+            "type": "object",
+            "properties": {
+              "scheme": { "const": "CAV" },
+              "id": { "example": "05000000-5" }
+            }
+          },
+          "unit": {
+            "type": "object",
+            "properties": { "code": { "const": "MTK" } }
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "latitude": { "type": "string" },
+              "longitude": { "type": "string" },
+              "elevation": { "type": "string" }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "addressID": {
+                "type": "object",
+                "properties": {
+                  "id": { "example": "4600000000" },
+                  "scheme": { "const": "koatuu" }
+                }
+              },
+              "streetAddress": {
+                "type": "object",
+                "properties": { "uk_UA": { "type": "string", "minLength": 10, "maxLength": 50 } }
+              },
+              "locality": {
+                "type": "object",
+                "properties": { "uk_UA": { "type": "string", "minLength": 3, "maxLength": 30 } }
+              },
+              "region": {
+                "type": "object",
+                "properties": { "uk_UA": { "type": "string", "enum": ["Автономна Республіка Крим", "Вінницька область", "Волинська область", "Дніпропетровська область", "Донецька область", "Житомирська область", "Закарпатська область", "Запорізька область", "Івано-Франківська область", "Київська область", "Київ", "Кіровоградська область", "Луганська область", "Львівська область", "Миколаївська область", "Одеська область", "Полтавська область", "Рівненська область", "Севастополь", "Сумська область", "Тернопільська область", "Харківська область", "Херсонська область", "Хмельницька область", "Черкаська область", "Чернівецька область", "Чернігівська область"] } }
+              },
+              "postalCode": { "type": "string", "minLength": 5, "maxLength": 5 },
+              "countryName": {
+                "type": "object",
+                "properties": { "uk_UA": { "const": "Україна" } }
+              }
+            }
+          },
+          "itemProps": {
+            "type": "object",
+            "properties": {
+              "quantityAndNomenclature": { "type": "string", "minLength": 15, "maxLength": 150 },
+              "workplacesQuantity": { "type": "integer", "minimum": 1, "maximum": 1000 },
+              "buildingsInformation": { "type": "string", "minLength": 15, "maxLength": 200 },
+              "landPlotInformation": { "type": "string", "minLength": 15, "maxLength": 150 },
+              "landProps": {
+                "type": "object",
+                "properties": {
+                  "landArea": { "type": "number", "minimum": 1, "maximum": 1000 },
+                  "cadastralNumber": { "example": "6310138500:10:012:0045" },
+                  "ownershipType": { "type": "string", "enum": ["private", "state", "communal", "unknown"] },
+                  "landIntendedUse": { "type": "string", "minLength": 15, "maxLength": 100 },
+                  "hasEncumbrances": { "type": "boolean" },
+                  "hasJointOwnership": { "type": "boolean" },
+                  "hasUtilitiesAvailability": { "type": "boolean" }
+                },
+                "conditionals": [
+                  {
+                    "if": { "properties": { "hasEncumbrances": { "const": true } } },
+                    "then": {
+                      "properties": {
+                        "encumbrances": { "type": "string", "enum": ["collateral", "lease", "arrest"] }
+                      }
+                    }
+                  },
+                  {
+                    "if": { "properties": { "hasJointOwnership": { "const": true } } },
+                    "then": {
+                      "properties": {
+                        "jointOwnership": { "type": "string", "minLength": 15, "maxLength": 100 }
+                      }
+                    }
+                  },
+                  {
+                    "if": { "properties": { "hasUtilitiesAvailability": { "const": true } } },
+                    "then": {
+                      "properties": {
+                        "utilitiesAvailability": { "type": "string", "minLength": 15, "maxLength": 100 }
+                      }
+                    }
+                  }
+                ]
+              },
+              "mainObligations": { "type": "string", "minLength": 20, "maxLength": 300 }
+            }
+          },
+          "registrationDetails": {
+            "type": "object",
+            "properties": {
+              "registrationStatus": { "type": "string", "enum": ["properlyRegistered", "registrationIsNotRequired"] },
+              "registrationID": { "type": "string", "minLength": 5, "maxLength": 12 },
+              "registrationDate": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "required": ["description", "quantity", "classification", "unit"]
+      }
+    },
+
+    "documents": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "requireValues": { "field": "documentType", "values": ["contractProforma"] },
+      "items": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string" },
+          "title": {
+            "type": "object",
+            "properties": {
+              "uk_UA": { "type": "string", "minLength": 5, "maxLength": 40 },
+              "en_US": { "type": "string", "minLength": 5, "maxLength": 40 }
+            }
+          },
+          "description": {
+            "type": "object",
+            "properties": {
+              "uk_UA": { "type": "string", "minLength": 5, "maxLength": 40 },
+              "en_US": { "type": "string", "minLength": 5, "maxLength": 40 }
+            }
+          },
+          "documentOf": { "const": "auction" },
+          "documentType": { "type": "string", "enum": ["notice", "illustration", "contractProforma"] },
+          "index": { "type": "integer", "minimum": 1, "maximum": 50 },
+          "format": { "type": "string", "enum": ["application/pdf", "application/msword", "image/jpeg", "image/png"] },
+          "language": { "type": "integer", "enum": [0] }
+        },
+        "required": ["token", "title", "documentOf"]
+      }
+    }
+  },
+  "if": {
+    "properties": { "tenderAttempts": { "const": 1 } }
+  },
+  "then": {},
+  "else": {
+    "properties": {
+      "previousAuctionId": { "example": "UA-PS-1122-33-44-000000-0" }
+    }
+  },
+  "required": ["sellingMethod", "auctionPeriod", "title", "value", "items"]
+}
