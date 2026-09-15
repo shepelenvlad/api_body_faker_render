@@ -136,7 +136,7 @@
     "dutchStep": {
       "type": "object",
       "properties": {
-        "dutchStepQuantity": { "type": "string", "minLength": 2, "maxLength": 2 }
+        "dutchStepQuantity": { "type": "string", "minLength": 1, "maxLength": 2 }
       }
     },
 
