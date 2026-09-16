@@ -1,33 +1,23 @@
 services:
-  # Backend: FastAPI в Docker-контейнері
   - type: web
     name: json-body-generator-api
     runtime: docker
-    rootDir: backend
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
     plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
     healthCheckPath: /api/health
-    envVars:
-      # URL фронтенда для CORS. Render за замовчуванням видає домен
-      # https://<service-name>.onrender.com, тому адреса передбачувана.
-      # Якщо Render присвоїть інший домен (напр. через зайняте ім'я) —
-      # онови це значення в дашборді Render вручну.
-      - key: CORS_ORIGINS
-        value: https://json-body-generator-ui.onrender.com
 
-  # Frontend: статичний білд Vite/React
   - type: web
-    name: json-body-generator-ui
     runtime: static
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
-    plan: free
-    envVars:
-      - key: VITE_API_BASE_URL
-        value: https://json-body-generator-api.onrender.com
+    name: json-body-generator-ui
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
+    envVars:
+      # Публичный URL бэкенда предсказуем: https://<name-бэкенда>.onrender.com
+      # Если меняешь name сервиса api выше — поправь и здесь.
+      - key: VITE_API_URL
+        value: https://json-body-generator-api.onrender.com
