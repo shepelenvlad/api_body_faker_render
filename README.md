@@ -23,8 +23,8 @@ docker-compose up --build
    і запропонує створити обидва сервіси.
 2. Перевір домени після першого деплою. За замовчуванням Render видає
    `https://<name>.onrender.com`, тож у `render.yaml` заздалегідь прописані:
-   - `api-body-faker-backend.onrender.com` (бекенд)
-   - `api-body-faker-frontend.onrender.com` (фронтенд, звідси береться
+   - `json-body-generator-api.onrender.com` (бекенд)
+   - `json-body-generator-ui.onrender.com` (фронтенд, звідси береться
      `CORS_ORIGINS` бекенда)
 
    Якщо Render видав інше ім'я (наприклад, обране зайняте) — онови у
