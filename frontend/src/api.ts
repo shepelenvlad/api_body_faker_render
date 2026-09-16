@@ -10,10 +10,10 @@ export interface SchemaInfo {
 }
 
 // На Render фронтенд деплоится как статический сайт и обращается к бекенду
-// по его публичному URL (VITE_API_BASE_URL, задаётся на этапе билда).
+// по его публичному URL (VITE_API_URL, задаётся на этапе билда).
 // Локально (vite dev / docker-compose) переменная не задана — используется
 // относительный путь /api, который проксируется vite/nginx.
-const API_ORIGIN = import.meta.env.VITE_API_BASE_URL ?? '';
+const API_ORIGIN = import.meta.env.VITE_API_URL ?? '';
 const BASE_URL = `${API_ORIGIN}/api`;
 
 async function parseJsonOrThrow<T>(res: Response, fallbackMessage: string): Promise<T> {
@@ -25,7 +25,7 @@ async function parseJsonOrThrow<T>(res: Response, fallbackMessage: string): Prom
     // index.html вместо JSON от бекенда.
     throw new Error(
       `Бекенд вернул не JSON (похоже, запрос ушёл не туда: ${res.url}). ` +
-        `Проверь VITE_API_BASE_URL на фронтенде и что бекенд задеплоен.`
+        `Проверь VITE_API_URL на фронтенде и что бекенд задеплоен.`
     );
   }
   return res.json();
