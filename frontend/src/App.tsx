@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CategoryInfo, fetchCategories, fetchSchemas, generateBody, SchemaInfo } from './api';
 import './App.css';
 
@@ -56,54 +56,55 @@ function App() {
 
   const selectedSchema = schemas.find((s) => s.id === selectedId);
 
-  return (
-    <div className="container">
-      <h1>JSON Body Generator</h1>
-      <p className="subtitle">Генератор тела запроса для тестирования REST API</p>
-
-      <div className="tabs">
-        {categories.map((c) => (
-          <button
-            key={c.id}
-            className={`tab ${c.id === activeCategory ? 'tab-active' : ''}`}
-            onClick={() => setActiveCategory(c.id)}
-          >
-            {c.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="controls">
-        <select
-          value={selectedId}
-          onChange={(e) => setSelectedId(e.target.value)}
-          disabled={schemas.length === 0}
-        >
-          {schemas.length === 0 && <option value="">Нет схем в этой категории</option>}
-          {schemas.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.title}
-            </option>
-          ))}
-        </select>
-        <button onClick={handleGenerate} disabled={!selectedId}>
-          Сгенерировать
-        </button>
-      </div>
-
-      {selectedSchema?.description && (
-        <p className="description">{selectedSchema.description}</p>
-      )}
-
-      {error && <p className="error">{error}</p>}
-
-      {result && (
-        <div className="result">
-          <button onClick={handleCopy}>{copied ? 'Скопировано!' : 'Скопировать'}</button>
-          <pre>{result}</pre>
-        </div>
-      )}
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'container' },
+    React.createElement('h1', null, 'JSON Body Generator'),
+    React.createElement(
+      'p',
+      { className: 'subtitle' },
+      'Генератор тела запроса для тестирования REST API',
+    ),
+    React.createElement(
+      'div',
+      { className: 'tabs' },
+      categories.map((c: CategoryInfo) =>
+        React.createElement(
+          'button',
+          {
+            key: c.id,
+            className: `tab ${c.id === activeCategory ? 'tab-active' : ''}`,
+            onClick: () => setActiveCategory(c.id),
+          },
+          c.label,
+        ),
+      ),
+    ),
+    React.createElement(
+      'div',
+      { className: 'controls' },
+      React.createElement(
+        'select',
+        {
+          value: selectedId,
+          onChange: (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedId(e.target.value),
+          disabled: schemas.length === 0,
+        },
+        schemas.length === 0 && React.createElement('option', { value: '' }, 'Нет схем в этой категории'),
+        schemas.map((s: SchemaInfo) => React.createElement('option', { key: s.id, value: s.id }, s.title)),
+      ),
+      React.createElement('button', { onClick: handleGenerate, disabled: !selectedId }, 'Сгенерировать'),
+    ),
+    selectedSchema?.description &&
+      React.createElement('p', { className: 'description' }, selectedSchema.description),
+    error && React.createElement('p', { className: 'error' }, error),
+    result &&
+      React.createElement(
+        'div',
+        { className: 'result' },
+        React.createElement('button', { onClick: handleCopy }, copied ? 'Скопировано!' : 'Скопировать'),
+        React.createElement('pre', null, result),
+      ),
   );
 }
 
