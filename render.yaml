@@ -1,7 +1,7 @@
 services:
   # Backend: FastAPI в Docker-контейнері
   - type: web
-    name: json-body-generator-backend
+    name: api-body-faker-backend
     runtime: docker
     rootDir: backend
     dockerfilePath: ./Dockerfile
@@ -14,11 +14,11 @@ services:
       # Якщо після першого деплою Render присвоїть інший домен (напр. через
       # зайняте ім'я) — онови це значення в дашборді Render вручну.
       - key: CORS_ORIGINS
-        value: https://json-body-generator-ui.onrender.com
+        value: https://api-body-faker-frontend.onrender.com
 
   # Frontend: статичний білд Vite/React
   - type: web
-    name: json-body-generator-frontend
+    name: api-body-faker-frontend
     runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
@@ -26,7 +26,7 @@ services:
     plan: free
     envVars:
       - key: VITE_API_BASE_URL
-        value: https://json-body-generator-api.onrender.com
+        value: https://api-body-faker-backend.onrender.com
     routes:
       - type: rewrite
         source: /*
