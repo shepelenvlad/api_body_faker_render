@@ -26,7 +26,7 @@ services:
     plan: free
     envVars:
       - key: VITE_API_BASE_URL
-        value: https://api-body-faker-backend.onrender.com
+        value: https://json-body-generator-api.onrender.com
     routes:
       - type: rewrite
         source: /*
