@@ -67,7 +67,7 @@ _FIELD_NAME_GENERATORS: list[tuple[re.Pattern, Any]] = [
 _FORMAT_GENERATORS = {
     "email": lambda: fake.email(),
     "date": lambda: fake.date(),
-    "date-time": lambda: fake.iso8601(),
+    "date-time": lambda: fake.date(pattern='%m/%d/%Y'),
     "uuid": lambda: str(fake.uuid4()),
     "uri": lambda: fake.url(),
     "url": lambda: fake.url(),

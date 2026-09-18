@@ -1,0 +1,1249 @@
+{
+  "title": "Legitimate Property Lease — English Fast",
+  "description": "Лот оренди майна (legitimatePropertyLease-english-fast)",
+  "type": "object",
+  "properties": {
+    "sellingMethod": {
+      "const": "legitimatePropertyLease-english-fast"
+    },
+    "auctionPeriod": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "relativeHours": {
+            "min": 24,
+            "max": 72
+          }
+        }
+      },
+      "required": [
+        "startDate"
+      ]
+    },
+    "lotId": {
+      "example": "Номер лота 1234567890"
+    },
+    "title": {
+      "type": "object",
+      "properties": {
+        "uk_UA": {
+          "type": "string",
+          "minLength": 15,
+          "maxLength": 120
+        },
+        "en_US": {
+          "default": "string"
+        }
+      }
+    },
+    "description": {
+      "type": "object",
+      "properties": {
+        "uk_UA": {
+          "type": "string",
+          "minLength": 15,
+          "maxLength": 200
+        },
+        "en_US": {
+          "default": "string"
+        }
+      }
+    },
+    "x_additionalInformation": {
+      "type": "object",
+      "properties": {
+        "uk_UA": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 150
+        },
+        "en_US": {
+          "default": "string"
+        }
+      }
+    },
+    "accessDetails": {
+      "type": "object",
+      "properties": {
+        "uk_UA": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 150
+        },
+        "en_US": {
+          "default": "string"
+        }
+      }
+    },
+    "value": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "const": "UAH"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 100,
+          "maximum": 500000
+        },
+        "valueAddedTaxIncluded": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "currency",
+        "amount"
+      ]
+    },
+    "valueAddedTaxCharged": {
+      "type": "boolean"
+    },
+    "calcOnBookValue": {
+      "type": "boolean"
+    },
+    "guarantee": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "const": "UAH"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 50,
+          "maximum": 5000
+        }
+      }
+    },
+    "registrationFee": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "const": "UAH"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 100,
+          "maximum": 5000
+        }
+      }
+    },
+    "minimalStep": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "const": "UAH"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      }
+    },
+    "tenderAttempts": {
+      "type": "integer",
+      "enum": [
+        1,
+        2
+      ]
+    },
+    "valuePeriod": {
+      "type": "string",
+      "enum": [
+        "hour",
+        "day",
+        "month",
+        "year"
+      ]
+    },
+    "leaseDuration": {
+      "example": "P1Y1M1D"
+    },
+    "registryId": {
+      "example": "605b13f97d5a4379a12171fe"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "itemType": {
+            "example": "jointPropertyComplex"
+          },
+          "description": {
+            "type": "object",
+            "properties": {
+              "uk_UA": {
+                "type": "string",
+                "minLength": 15,
+                "maxLength": 100
+              },
+              "en_US": {
+                "default": "string"
+              }
+            }
+          },
+          "quantity": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4
+          },
+          "classification": {
+            "type": "object",
+            "properties": {
+              "scheme": {
+                "const": "CAV"
+              },
+              "id": {
+                "example": "05000000-5"
+              }
+            }
+          },
+          "unit": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "const": "MTK"
+              }
+            }
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "string"
+              },
+              "elevation": {
+                "type": "string"
+              }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "addressID": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "example": "4600000000"
+                  },
+                  "scheme": {
+                    "const": "koatuu"
+                  }
+                }
+              },
+              "streetAddress": {
+                "type": "object",
+                "properties": {
+                  "uk_UA": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 50
+                  }
+                }
+              },
+              "locality": {
+                "type": "object",
+                "properties": {
+                  "uk_UA": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 30
+                  }
+                }
+              },
+              "region": {
+                "type": "object",
+                "properties": {
+                  "uk_UA": {
+                    "type": "string",
+                    "enum": [
+                      "Автономна Республіка Крим",
+                      "Вінницька область",
+                      "Волинська область",
+                      "Дніпропетровська область",
+                      "Донецька область",
+                      "Житомирська область",
+                      "Закарпатська область",
+                      "Запорізька область",
+                      "Івано-Франківська область",
+                      "Київська область",
+                      "Київ",
+                      "Кіровоградська область",
+                      "Луганська область",
+                      "Львівська область",
+                      "Миколаївська область",
+                      "Одеська область",
+                      "Полтавська область",
+                      "Рівненська область",
+                      "Севастополь",
+                      "Сумська область",
+                      "Тернопільська область",
+                      "Харківська область",
+                      "Херсонська область",
+                      "Хмельницька область",
+                      "Черкаська область",
+                      "Чернівецька область",
+                      "Чернігівська область"
+                    ]
+                  }
+                }
+              },
+              "countryName": {
+                "type": "object",
+                "properties": {
+                  "uk_UA": {
+                    "const": "Україна"
+                  }
+                }
+              },
+              "postalCode": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 5
+              }
+            }
+          },
+          "jpcProps": {
+            "type": "object",
+            "properties": {
+              "quantityAndNomenclature": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 150
+              },
+              "workplacesQuantity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2000
+              },
+              "buildingsInformation": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 200
+              },
+              "landPlotInformation": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 150
+              },
+              "landProps": {
+                "type": "object",
+                "properties": {
+                  "landArea": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 100000
+                  },
+                  "cadastralNumber": {
+                    "type": "string"
+                  },
+                  "ownershipType": {
+                    "type": "string",
+                    "enum": [
+                      "private",
+                      "state",
+                      "municipal"
+                    ]
+                  },
+                  "landIntendedUse": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 100
+                  }
+                }
+              },
+              "mainObligations": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 300
+              }
+            }
+          },
+          "registrationDetails": {
+            "type": "object",
+            "properties": {
+              "registrationStatus": {
+                "type": "string",
+                "enum": [
+                  "properlyRegistered",
+                  "notRegistered",
+                  "inProcess"
+                ]
+              },
+              "registrationID": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 15
+              },
+              "registrationDate": {
+                "type": "string",
+                "relativeHours": {
+                  "min": -43800,
+                  "max": -720
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "itemType",
+          "description",
+          "quantity",
+          "classification"
+        ]
+      }
+    },
+    "leaseRules": {
+      "type": "object",
+      "properties": {
+        "schedule": {
+          "type": "object",
+          "properties": {
+            "hoursBy": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 24
+                },
+                "by": {
+                  "const": "day"
+                }
+              }
+            },
+            "daysBy": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31
+                },
+                "by": {
+                  "const": "month"
+                }
+              }
+            },
+            "period": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "string",
+                    "relativeHours": {
+                      "min": 1,
+                      "max": 720
+                    }
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "relativeHours": {
+                      "min": 8760,
+                      "max": 17520
+                    }
+                  },
+                  "weekdays": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "startTime": {
+                          "example": "09:00"
+                        },
+                        "endTime": {
+                          "example": "18:00"
+                        },
+                        "weekday": {
+                          "type": "object",
+                          "properties": {
+                            "uk_UA": {
+                              "type": "string",
+                              "enum": [
+                                "Понеділок",
+                                "Вівторок",
+                                "Середа",
+                                "Четвер",
+                                "П'ятниця",
+                                "Субота",
+                                "Неділя"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "intendedUse": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "type": "string",
+            "enum": [
+              "officePostMassmediaBank",
+              "libraryCinemaTheatre",
+              "coursesTrainingsEarly",
+              "gymSport",
+              "healthcarePharmaLaboratory"
+            ]
+          }
+        },
+        "intendedUseRestrictionMethod": {
+          "type": "string",
+          "enum": [
+            "exceptDescribed",
+            "onlyDescribed"
+          ]
+        },
+        "intendedUseRestrictionDescription": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 150
+        },
+        "additionalLeaseConditions": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 150
+        },
+        "subleaseAllowed": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false"
+          ]
+        }
+      }
+    },
+    "relatedOrganizations": {
+      "type": "object",
+      "properties": {
+        "propertyOwner": {
+          "type": "object",
+          "properties": {
+            "identifier": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "12345678"
+                },
+                "legalName": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 100
+                    },
+                    "en_US": {
+                      "default": ""
+                    }
+                  }
+                },
+                "scheme": {
+                  "const": "UA-EDR"
+                }
+              },
+              "required": [
+                "id",
+                "legalName",
+                "scheme"
+              ]
+            },
+            "address": {
+              "type": "object",
+              "properties": {
+                "addressID": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "example": "4600000000"
+                    },
+                    "scheme": {
+                      "const": "koatuu"
+                    }
+                  }
+                },
+                "streetAddress": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 50
+                    }
+                  }
+                },
+                "locality": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 3,
+                      "maxLength": 30
+                    }
+                  }
+                },
+                "region": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "enum": [
+                        "Автономна Республіка Крим",
+                        "Вінницька область",
+                        "Волинська область",
+                        "Дніпропетровська область",
+                        "Донецька область",
+                        "Житомирська область",
+                        "Закарпатська область",
+                        "Запорізька область",
+                        "Івано-Франківська область",
+                        "Київська область",
+                        "Київ",
+                        "Кіровоградська область",
+                        "Луганська область",
+                        "Львівська область",
+                        "Миколаївська область",
+                        "Одеська область",
+                        "Полтавська область",
+                        "Рівненська область",
+                        "Севастополь",
+                        "Сумська область",
+                        "Тернопільська область",
+                        "Харківська область",
+                        "Херсонська область",
+                        "Хмельницька область",
+                        "Черкаська область",
+                        "Чернівецька область",
+                        "Чернігівська область"
+                      ]
+                    }
+                  }
+                },
+                "countryName": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "const": "Україна"
+                    }
+                  }
+                },
+                "postalCode": {
+                  "type": "string",
+                  "minLength": 5,
+                  "maxLength": 5
+                }
+              }
+            },
+            "contactPoint": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 40
+                    }
+                  }
+                },
+                "telephone": {
+                  "type": "string",
+                  "format": "phone"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "faxNumber": {
+                  "type": "string",
+                  "format": "phone"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "url"
+                }
+              }
+            },
+            "representativeInfo": {
+              "type": "string",
+              "minLength": 20,
+              "maxLength": 150
+            }
+          }
+        },
+        "sellingEntity": {
+          "type": "object",
+          "properties": {
+            "identifier": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "12345678"
+                },
+                "legalName": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 100
+                    },
+                    "en_US": {
+                      "default": ""
+                    }
+                  }
+                },
+                "scheme": {
+                  "const": "UA-EDR"
+                }
+              },
+              "required": [
+                "id",
+                "legalName",
+                "scheme"
+              ]
+            },
+            "address": {
+              "type": "object",
+              "properties": {
+                "addressID": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "example": "4600000000"
+                    },
+                    "scheme": {
+                      "const": "koatuu"
+                    }
+                  }
+                },
+                "streetAddress": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 50
+                    }
+                  }
+                },
+                "locality": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 3,
+                      "maxLength": 30
+                    }
+                  }
+                },
+                "region": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "enum": [
+                        "Автономна Республіка Крим",
+                        "Вінницька область",
+                        "Волинська область",
+                        "Дніпропетровська область",
+                        "Донецька область",
+                        "Житомирська область",
+                        "Закарпатська область",
+                        "Запорізька область",
+                        "Івано-Франківська область",
+                        "Київська область",
+                        "Київ",
+                        "Кіровоградська область",
+                        "Луганська область",
+                        "Львівська область",
+                        "Миколаївська область",
+                        "Одеська область",
+                        "Полтавська область",
+                        "Рівненська область",
+                        "Севастополь",
+                        "Сумська область",
+                        "Тернопільська область",
+                        "Харківська область",
+                        "Херсонська область",
+                        "Хмельницька область",
+                        "Черкаська область",
+                        "Чернівецька область",
+                        "Чернігівська область"
+                      ]
+                    }
+                  }
+                },
+                "countryName": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "const": "Україна"
+                    }
+                  }
+                },
+                "postalCode": {
+                  "type": "string",
+                  "minLength": 5,
+                  "maxLength": 5
+                }
+              }
+            },
+            "contactPoint": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 40
+                    }
+                  }
+                },
+                "telephone": {
+                  "type": "string",
+                  "format": "phone"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "faxNumber": {
+                  "type": "string",
+                  "format": "phone"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "url"
+                }
+              }
+            },
+            "representativeInfo": {
+              "type": "string",
+              "minLength": 20,
+              "maxLength": 150
+            }
+          }
+        },
+        "currentTenants": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "example": "12345678"
+                  },
+                  "legalName": {
+                    "type": "object",
+                    "properties": {
+                      "uk_UA": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 100
+                      },
+                      "en_US": {
+                        "default": ""
+                      }
+                    }
+                  },
+                  "scheme": {
+                    "const": "UA-EDR"
+                  }
+                },
+                "required": [
+                  "id",
+                  "legalName",
+                  "scheme"
+                ]
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "addressID": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "example": "4600000000"
+                      },
+                      "scheme": {
+                        "const": "koatuu"
+                      }
+                    }
+                  },
+                  "streetAddress": {
+                    "type": "object",
+                    "properties": {
+                      "uk_UA": {
+                        "type": "string",
+                        "minLength": 10,
+                        "maxLength": 50
+                      }
+                    }
+                  },
+                  "locality": {
+                    "type": "object",
+                    "properties": {
+                      "uk_UA": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 30
+                      }
+                    }
+                  },
+                  "region": {
+                    "type": "object",
+                    "properties": {
+                      "uk_UA": {
+                        "type": "string",
+                        "enum": [
+                          "Автономна Республіка Крим",
+                          "Вінницька область",
+                          "Волинська область",
+                          "Дніпропетровська область",
+                          "Донецька область",
+                          "Житомирська область",
+                          "Закарпатська область",
+                          "Запорізька область",
+                          "Івано-Франківська область",
+                          "Київська область",
+                          "Київ",
+                          "Кіровоградська область",
+                          "Луганська область",
+                          "Львівська область",
+                          "Миколаївська область",
+                          "Одеська область",
+                          "Полтавська область",
+                          "Рівненська область",
+                          "Севастополь",
+                          "Сумська область",
+                          "Тернопільська область",
+                          "Харківська область",
+                          "Херсонська область",
+                          "Хмельницька область",
+                          "Черкаська область",
+                          "Чернівецька область",
+                          "Чернігівська область"
+                        ]
+                      }
+                    }
+                  },
+                  "countryName": {
+                    "type": "object",
+                    "properties": {
+                      "uk_UA": {
+                        "const": "Україна"
+                      }
+                    }
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 5
+                  }
+                }
+              },
+              "contactPoint": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "object",
+                    "properties": {
+                      "uk_UA": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 40
+                      }
+                    }
+                  },
+                  "telephone": {
+                    "type": "string",
+                    "format": "phone"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                }
+              },
+              "representativeInfo": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 150
+              }
+            }
+          }
+        },
+        "ownershipType": {
+          "type": "string",
+          "enum": [
+            "state",
+            "municipal",
+            "private"
+          ]
+        }
+      }
+    },
+    "bankAccounts": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueBy": "accountType",
+      "items": {
+        "type": "object",
+        "properties": {
+          "accountType": {
+            "type": "string",
+            "enum": [
+              "registrationFee",
+              "guarantee",
+              "advancePayment",
+              "securityDeposit",
+              "improvementCompensation",
+              "lease",
+              "other"
+            ]
+          },
+          "accounts": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "bankName": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 40
+                    }
+                  }
+                },
+                "description": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 80
+                    }
+                  }
+                },
+                "paymentPurpose": {
+                  "type": "object",
+                  "properties": {
+                    "uk_UA": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 60
+                    },
+                    "en_US": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 40
+                    }
+                  }
+                },
+                "accountIdentifications": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "example": "UA123456789012345678908765432"
+                      },
+                      "scheme": {
+                        "const": "UA-IBAN"
+                      }
+                    }
+                  }
+                },
+                "currency": {
+                  "const": "UAH"
+                },
+                "accountHolder": {
+                  "type": "object",
+                  "properties": {
+                    "identifier": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "example": "12312312"
+                        },
+                        "scheme": {
+                          "const": "AE-ACCI"
+                        },
+                        "legalName": {
+                          "type": "object",
+                          "properties": {
+                            "uk_UA": {
+                              "type": "string",
+                              "minLength": 10,
+                              "maxLength": 60
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "if": {
+          "properties": {
+            "accountType": {
+              "const": "advancePayment"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "holderType": {
+              "type": "string",
+              "enum": [
+                "balanceHolder",
+                "other"
+              ]
+            },
+            "percent": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "requireValues": {
+        "field": "documentType",
+        "values": [
+          "x_itemPlan"
+        ]
+      },
+      "items": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "const": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRzIn0.eyJpZCI6ImM2Y2UyNDY2ZDg4MTQwNzc5NDk4YTk4ZTllMzU2YzczIiwic2NvcGUiOiJwdWJsaWMiLCJmaWxlbmFtZSI6IjEuZG9jeCIsImRvY3VtZW50VHlwZSI6ImNvbnRyYWN0UHJvZm9ybWEiLCJmb3JtYXQiOiJhcHBsaWNhdGlvbi92bmQub3BlbnhtbGZvcm1hdHMtb2ZmaWNlZG9jdW1lbnQud29yZHByb2Nlc3NpbmdtbC5kb2N1bWVudCIsInNoYSI6IjQzYmI3OTI3MmQ3NjU5MjFhODZjODNhMThkNDAyZGVjMWU1ZTE0NmJkMTA2ZjYxYWFlMDcyZDZiNzNjNmRhYTQiLCJoYXNoIjoibWQ1OjM3OGY5MjI0NmVkZGMxNWE4MjA0MzRjNDBiYWYyMDJmIiwiZGF0ZUNyZWF0ZWQiOiIyMDI2LTA3LTMxIDEyOjQxOjE5LjI4NDA4MyIsInNpemUiOiIxMDI1OSIsImlhdCI6MTc4NTUwMTY3OX0.qYtHUGmgihQjZauDbEgzYg7LoJRchbWcsWR9wB7njdvoLhPeKXVFm-RzDr01DAy75Xj17c-lJd8yYiek_iW_qppBqaNoAsL_L7CHHyWENcg6x_qEpGX7pXl_VoeTtLjRgofULA9s4KZiVtoPcEWXLWAu7nnp9DxlkHyblm413TB6ebdYLZAAAXx3_1NZ38jLDoLw67KpjUbi-X6a79WthTXH6-Wy9rxYlOulg0f_Qfwj5SgMzQwQMUKwAr8Vfm6o4yXe9FYrIrf_5gpUHMsbQl2zCv08nrADLu1UVDelT8R-xRmS2WK7nEI6MNzJUJGzqsAwokfHLTYAxVhH9zcQC9znjxYXFqVI0e6GHmsmXTNVc2JO1Kwfs1Mjmb01KBVAWG3A_umeYmb2va8pJkRRFUFW5B9tDIFNxHfwb0hilFtkVR3hCQ6-jae8IPS1uYxklvneOd2OGgqZGl4iyPQ3jBE8monydWah3GN1tahZkhV5VX5xz5eCLo1c_bLDPSgR0gWi_9WTlSyETfR0lAbH3glwgJFzaty70avi_Z8b8i3PsPK3lV2IVrc0ay_YSNBbVJOOCy-5-dpEHdIdXpXOKn8hiwrJdPRRYnYNkhtBbpIx_u8PIW3fE1Cam07kPjRb3mKRURSWBVz6wyWCWxd6HH9ysHTyP1r70hyUAwllFlA_-KEvmPmnD6rPD_rFoHNgpLgW1U_cK3YVsTlUO75L1DRSpK8ZHhrQh86OCJ74ceZjlDPG7GVzKKCW7T2aoC1Gwa3S0IgrAFB6JTcSt5u96p8WRewxZzvhwSfkKYR_4CSD13qGpLOEJ4ij5EbDBDZ_AA3QlH4CM7HVd53V-26Mfq2VpegvKkRrzHQTLBAlM8qzhKtgdvBZZjI_YlA52CuCDwgEE"
+          },
+          "title": {
+            "type": "object",
+            "properties": {
+              "uk_UA": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 40
+              },
+              "en_US": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 40
+              }
+            }
+          },
+          "description": {
+            "type": "object",
+            "properties": {
+              "uk_UA": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 40
+              },
+              "en_US": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 40
+              }
+            }
+          },
+          "documentOf": {
+            "const": "auction"
+          },
+          "documentType": {
+            "type": "string",
+            "enum": [
+              "notice",
+              "illustration",
+              "x_itemPlan"
+            ]
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "format": {
+            "default": "string"
+          },
+          "language": {
+            "const": 0
+          }
+        },
+        "required": [
+          "token",
+          "title",
+          "documentOf"
+        ],
+        "tokenFromDocuments": "documentType"
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "tenderAttempts": {
+        "const": 1
+      }
+    }
+  },
+  "then": {},
+  "else": {
+    "properties": {
+      "previousAuctionId": {
+        "example": "UA-PS-1122-33-44-000000-0"
+      }
+    }
+  },
+  "required": [
+    "sellingMethod",
+    "auctionPeriod",
+    "title",
+    "value",
+    "items"
+  ]
+}
