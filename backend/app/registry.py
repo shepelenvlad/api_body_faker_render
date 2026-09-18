@@ -4,6 +4,12 @@ from typing import Optional
 
 SCHEMAS_DIR = Path(__file__).resolve().parent.parent / "schemas"
 
+# Общий для всех категорий файл-справочник documentType -> token. Лежит
+# прямо в schemas/ (не в подпапке категории), т.к. типы документов вроде
+# "notice"/"illustration"/"technicalSpecifications" переиспользуются между
+# procedures/registry/jobber/bids.
+DOCUMENTS_FILE = SCHEMAS_DIR / "documents.json"
+
 # Категории (табы во фронтенде) — id совпадает с именем папки в schemas/.
 # Порядок в этом списке = порядок табов в UI.
 CATEGORIES: list[dict] = [
@@ -19,6 +25,18 @@ _CATEGORY_IDS = {c["id"] for c in CATEGORIES}
 def list_categories() -> list[dict]:
     """Список табов для фронтенда."""
     return CATEGORIES
+
+
+def get_documents_map() -> dict:
+    """documentType -> token, для схем с ключом "tokenFromDocuments" (см.
+    generator.py). Читается заново при каждом вызове — как и схемы, файл
+    можно редактировать без перезапуска бэкенда."""
+    try:
+        with open(DOCUMENTS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
 
 
 def _category_dir(category_id: str) -> Optional[Path]:

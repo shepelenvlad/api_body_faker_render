@@ -8,6 +8,20 @@
 4. иначе               -> генерируем через Faker (по format, затем по имени поля,
                            затем по типу как fallback)
 
+Кастомные ключи схемы (не входят в стандартный JSON Schema):
+- "relativeHours": {"min": X, "max": Y} — дата/время как (сейчас UTC + N часов).
+- "uniqueBy": <поле> — на уровне array, раздаёт значения enum этого поля по
+  элементам без повторов.
+- "requireValues": {"field": ..., "values": [...]} — на уровне array,
+  гарантирует, что каждое значение встретится хотя бы в одном элементе.
+- "if"/"then"/"else" и "conditionals": [...] — на уровне object, простые
+  условные свойства (see _condition_matches).
+- "tokenFromDocuments": <поле> — на уровне object внутри "documents.items":
+  после генерации object'а подставляет result["token"] из schemas/documents.json
+  по значению result[<поле>] (обычно "documentType"). Если в documents.json
+  нет записи для этого значения — token остаётся тем, что уже сгенерировала
+  схема (const/faker), т.е. это override, а не обязательная замена.
+
 Ограничение v1: $ref / $defs не резолвятся. Если понадобится — легко добавить
 resolve_ref() и прокидывать корневую схему вглубь рекурсии.
 """
@@ -18,6 +32,8 @@ from datetime import datetime, timedelta
 from typing import Any
 
 from faker import Faker
+
+from app.registry import get_documents_map
 
 fake = Faker()
 
@@ -164,22 +180,52 @@ def _fix_date_range(obj: dict) -> None:
     obj["dateTill"] = date_till.isoformat()
 
 
-def _reapply_conditional(item: dict, schema: dict) -> None:
-    """После того как uniqueBy вручную поменял поле, от которого зависит
-    if/then/else этого же объекта, — пересчитывает зависимые свойства
-    заново (иначе, например, scheme поменяется, а id останется от старой
-    scheme, взятый ещё до подмены)."""
-    if_schema = schema.get("if")
-    if not if_schema:
+def _apply_document_token(obj: dict, key_field: str) -> None:
+    """Поддержка кастомного ключа объекта "tokenFromDocuments": <имя поля>.
+    После генерации объекта подставляет obj["token"] из schemas/documents.json
+    по значению obj[key_field] (обычно это "documentType"). Если для такого
+    значения записи в documents.json нет — оставляет то, что уже было
+    сгенерировано схемой (const/example/faker-заглушка) как запасной вариант,
+    чтобы отсутствие записи не ломало генерацию."""
+    key_value = obj.get(key_field)
+    if key_value is None:
         return
-    if _condition_matches(item, if_schema):
-        then_schema = schema.get("then", {})
-        for name, sub_schema in then_schema.get("properties", {}).items():
-            item[name] = generate_from_schema(sub_schema, field_name=name)
-    elif "else" in schema:
-        else_schema = schema["else"]
-        for name, sub_schema in else_schema.get("properties", {}).items():
-            item[name] = generate_from_schema(sub_schema, field_name=name)
+    tokens = get_documents_map()
+    if key_value in tokens:
+        obj["token"] = tokens[key_value]
+
+
+def _reapply_conditional(item: dict, schema: dict) -> None:
+    """После того как uniqueBy/requireValues вручную поменяли поле, от
+    которого зависят if/then/else, conditionals или tokenFromDocuments
+    этого же объекта, — пересчитывает зависимые свойства заново (иначе,
+    например, documentType поменяется, а token останется от старого типа,
+    сгенерированный ещё до подмены)."""
+    if_schema = schema.get("if")
+    if if_schema:
+        if _condition_matches(item, if_schema):
+            then_schema = schema.get("then", {})
+            for name, sub_schema in then_schema.get("properties", {}).items():
+                item[name] = generate_from_schema(sub_schema, field_name=name)
+        elif "else" in schema:
+            else_schema = schema["else"]
+            for name, sub_schema in else_schema.get("properties", {}).items():
+                item[name] = generate_from_schema(sub_schema, field_name=name)
+
+    for rule in schema.get("conditionals", []):
+        rule_if = rule.get("if", {})
+        if _condition_matches(item, rule_if):
+            then_schema = rule.get("then", {})
+            for name, sub_schema in then_schema.get("properties", {}).items():
+                item[name] = generate_from_schema(sub_schema, field_name=name)
+        elif "else" in rule:
+            else_schema = rule["else"]
+            for name, sub_schema in else_schema.get("properties", {}).items():
+                item[name] = generate_from_schema(sub_schema, field_name=name)
+
+    token_key_field = schema.get("tokenFromDocuments")
+    if token_key_field:
+        _apply_document_token(item, token_key_field)
 
 
 def _assign_unique_field(items: list, item_schema: dict, field_name: str) -> None:
@@ -199,11 +245,13 @@ def _assign_unique_field(items: list, item_schema: dict, field_name: str) -> Non
         _reapply_conditional(item, item_schema)
 
 
-def _ensure_required_values(items: list, field_name: str, required_values: list) -> None:
+def _ensure_required_values(items: list, field_name: str, required_values: list, item_schema: dict) -> None:
     """Поддержка кастомного ключа массива "requireValues": {"field": ..., "values": [...]}.
     Гарантирует, что каждое значение из required_values встретится хотя бы
     в одном элементе массива (в отличие от uniqueBy — не требует различия
-    остальных элементов между собой)."""
+    остальных элементов между собой). После подмены поля пересчитывает
+    зависимые свойства (в первую очередь — token через tokenFromDocuments),
+    иначе documentType поменяется, а token останется от старого значения."""
     if not field_name or not required_values or not items:
         return
     present = {item.get(field_name) for item in items if isinstance(item, dict)}
@@ -215,6 +263,7 @@ def _ensure_required_values(items: list, field_name: str, required_values: list)
         if idx >= len(items):
             break
         items[idx][field_name] = value
+        _reapply_conditional(items[idx], item_schema)
         idx += 1
 
 
@@ -256,6 +305,10 @@ def generate_from_schema(schema: dict, field_name: str = "") -> Any:
                 else_schema = rule["else"]
                 result = _generate_properties(else_schema.get("properties", {}), base=result)
 
+        token_key_field = schema.get("tokenFromDocuments")
+        if token_key_field:
+            _apply_document_token(result, token_key_field)
+
         _fix_date_range(result)
         _fix_discount_tender_attempts(result)
         _fix_discount_amount(result)
@@ -274,7 +327,7 @@ def generate_from_schema(schema: dict, field_name: str = "") -> Any:
 
         require_values = schema.get("requireValues")
         if require_values:
-            _ensure_required_values(items, require_values.get("field"), require_values.get("values", []))
+            _ensure_required_values(items, require_values.get("field"), require_values.get("values", []), item_schema)
 
         return items
 

@@ -543,7 +543,18 @@
             "properties": {
               "code": {
                 "type": "string",
-                "enum": ["BX", "D64", "E50", "GRM", "H87", "KGM", "LTR", "MTQ", "RM", "TNE"]
+                "enum": [
+                  "BX",
+                  "D64",
+                  "E50",
+                  "GRM",
+                  "H87",
+                  "KGM",
+                  "LTR",
+                  "MTQ",
+                  "RM",
+                  "TNE"
+                ]
               }
             }
           },
@@ -651,7 +662,8 @@
           "token",
           "title",
           "documentOf"
-        ]
+        ],
+        "tokenFromDocuments": "documentType"
       },
       "requireValues": {
         "field": "documentType",

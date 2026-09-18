@@ -962,7 +962,7 @@
         "subleaseAllowed"
       ],
       "properties": {
-         "schedule": {
+        "schedule": {
           "type": "object",
           "properties": {
             "period": {
@@ -1298,7 +1298,8 @@
           "token": {
             "const": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRzIn0.eyJpZCI6IjYzMzdkNDc0YjBjZTRmN2JiZmNkOWFhZmFiZGM5Njk0Iiwic2NvcGUiOiJwdWJsaWMiLCJmaWxlbmFtZSI6IjEuZG9jeCIsImRvY3VtZW50VHlwZSI6ImlsbHVzdHJhdGlvbiIsImZvcm1hdCI6ImFwcGxpY2F0aW9uL3ZuZC5vcGVueG1sZm9ybWF0cy1vZmZpY2Vkb2N1bWVudC53b3JkcHJvY2Vzc2luZ21sLmRvY3VtZW50Iiwic2hhIjoiNDNiYjc5MjcyZDc2NTkyMWE4NmM4M2ExOGQ0MDJkZWMxZTVlMTQ2YmQxMDZmNjFhYWUwNzJkNmI3M2M2ZGFhNCIsImhhc2giOiJtZDU6Mzc4ZjkyMjQ2ZWRkYzE1YTgyMDQzNGM0MGJhZjIwMmYiLCJkYXRlQ3JlYXRlZCI6IjIwMjYtMDktMTUgMTk6NDE6MzYuNjkxODM1Iiwic2l6ZSI6IjEwMjU5IiwiaWF0IjoxNzg5NTAxMjk2fQ.Tr1NQcNn5V62tPVL2eY47tMFjALHolK2llIFcqpNxwI9EdbFCbJ1tV6biNbL-oMxqo37vgIo46qYjt67mqWL5Ik2D8KYJXcOYCakYRextLopZuMjyL7L4XBPzPgnlQMYvVP8VZTsuZj6Ujp4Ba1SW4Qrb1_sIX-1C8gGiQSdbm0qnqXTQSLkGe2BxqBvx_sZxXu974njQl3v7LcQm2yRN-JMJKJtcsWsSQ3HMVKUYP-A3aEpzln5xiGAkPver1Yoi-Eqe4OVMdqjTKiLuVqDX1f16_xhRA9ZYGqsXudmWHp_i3KOEsxunR2e7RvVx6FlaTAvsnLTDOni1aFx8XJ2ajcP3OUfanhy40NgWZFCdXcBKT6eRQ2KLtpr2gPrC2D8UxPOxHboBPlGBTczEEeU5V3V3vCDQCBJQH4fzAeUSlkUoh0TF4yLr0sPX3rFDiCjY_HPQaAntU0ZVOR1XnQ_QsBxAqnduheAb1mzyKMRpaE4auEQmyUL0qzpsXTtjrlZBQ0fV3MW_AIgGo5vtgdWo7zaC60W_srm4IaQi2PQpmUtHcfF47ZUckc48wtLBBMob1kdynvxch9Kf0ub9Qpdh2Z2HmjCdEPvHiWj6_Wb-9fANlKL_DVJl6ZzSMprnkr9_9YJ5MpXvXQnsVnVfqeDzvXIaJQaYBVPGSizKIIe9pk"
           }
-        }
+        },
+        "tokenFromDocuments": "documentType"
       }
     },
     "registryObjectItems": {

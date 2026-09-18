@@ -805,7 +805,8 @@
           "token",
           "title",
           "documentOf"
-        ]
+        ],
+        "tokenFromDocuments": "documentType"
       }
     },
     "minNumberOfQualifiedBids": {

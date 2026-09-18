@@ -175,6 +175,63 @@ docker-compose up --build
 Результат: серед документів завжди буде хоча б один з
 `documentType == "technicalSpecifications"`.
 
+### `tokenFromDocuments` — token з єдиного довідника `documents.json`
+
+До цього кожна схема тримала свій `token` як `const`/faker-заглушку окремо
+для кожного типу документа — один і той самий `documentType` в різних
+схемах міг мати різні (і не завжди валідні) токени. Тепер є єдиний
+довідник `backend/schemas/documents.json`:
+
+```json
+{
+  "notice": "eyJ0eXAiOiJKV1Qi...",
+  "illustration": "eyJ0eXAiOiJKV1Qi...",
+  "technicalSpecifications": "eyJ0eXAiOiJKV1Qi...",
+  "x_itemPlan": "REPLACE_WITH_REAL_TOKEN_FOR_THIS_DOCUMENT_TYPE"
+}
+```
+
+У схемі, в об'єкті-елементі `documents.items` (поруч з `properties`),
+додається ключ:
+
+```json
+"documents": {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "tokenFromDocuments": "documentType",
+    "properties": {
+      "token": { "type": "string" },
+      "documentType": { "type": "string", "enum": ["notice", "illustration"] }
+    }
+  }
+}
+```
+
+Після генерації об'єкта генератор бере значення `documentType` цього ж
+об'єкта, шукає його як ключ у `documents.json` і, якщо знайшов — підставляє
+відповідний `token`. Якщо запису для такого `documentType` в файлі нема —
+`token` лишається тим, що вже згенерувала сама схема (тобто це override,
+а не обов'язкова заміна — додавати новий тип документа в `documents.json`
+не обов'язково одразу).
+
+Це працює й тоді, коли `documentType` **примусово підмінюється** пізніше —
+через `uniqueBy` або `requireValues` (обидва тепер перераховують `token`
+одразу після підміни, а не лишають його від початково згенерованого типу).
+
+`documents.json` лежить прямо в `backend/schemas/` (не всередині
+`procedures/`/`registry`/`jobber`/`bids`), бо типи документів (`notice`,
+`illustration` тощо) повторюються між категоріями. Редагується так само
+без перезапуску бекенда — файл читається заново при кожному запиті.
+
+**Важливо:** для частини типів документів (усе, що з нашого чату не
+зустрічалось у реальних прикладах — `x_itemPlan`, `x_passport`,
+`evaluationCriteria` тощо) у файлі стоїть плейсхолдер
+`REPLACE_WITH_REAL_TOKEN_FOR_THIS_DOCUMENT_TYPE` — це свідомо, щоб не
+підсовувати структурно правдоподібний, але невалідний токен замість
+чесного "тут треба реальне значення". Підставте туди справжні токени, щойно
+вони з'являться (наприклад, з відповіді реального API завантаження файлу).
+
 ### Автоматичні cross-field фікси
 
 Деякі залежності зустрічаються настільки часто, що для них зроблено окремі
@@ -232,14 +289,15 @@ docker-compose up --build
 ```
 backend/
   app/
-    main.py       # FastAPI, ендпоінти (категорії/схеми/генерація)
-    generator.py  # JSON Schema -> заповнений JSON (Faker + кастомна логіка)
-    registry.py   # категорії + сканування підпапок schemas/<category>/
+    main.py         # FastAPI, ендпоінти (категорії/схеми/генерація)
+    generator.py    # JSON Schema -> заповнений JSON (Faker + кастомна логіка)
+    registry.py     # категорії + сканування підпапок schemas/<category>/ + documents.json
   schemas/
-    procedures/   # .json схеми таба Procedures
-    registry/     # .json схеми таба Registry
-    jobber/       # .json схеми таба Jobber
-    bids/         # .json схеми таба Bids
+    documents.json  # довідник documentType -> token (спільний для всіх категорій)
+    procedures/     # .json схеми таба Procedures
+    registry/       # .json схеми таба Registry
+    jobber/         # .json схеми таба Jobber
+    bids/           # .json схеми таба Bids
 frontend/
   src/
     App.tsx       # таби категорій + дропдаун + кнопка "Сгенерувати" + копіювання

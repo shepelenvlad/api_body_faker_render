@@ -2,7 +2,11 @@
   "title": "BSD Bid — заявка учасника",
   "description": "BSD Тіло заявки (bid) учасника процедури закупівлі",
   "type": "object",
-  "required": ["bidders", "documents", "value"],
+  "required": [
+    "bidders",
+    "documents",
+    "value"
+  ],
   "properties": {
     "bidders": {
       "type": "array",
@@ -10,30 +14,41 @@
       "maxItems": 1,
       "items": {
         "type": "object",
-        "required": ["identifier", "address", "contactPoint"],
+        "required": [
+          "identifier",
+          "address",
+          "contactPoint"
+        ],
         "properties": {
           "identifier": {
             "type": "object",
-            "required": ["id", "scheme", "legalName"],
+            "required": [
+              "id",
+              "scheme",
+              "legalName"
+            ],
             "properties": {
               "id": {
                 "type": "string",
                 "enum": [
-                    "40912345",
-                    "72645189",
-                    "18937462",
-                    "56283917",
-                    "09471058",
-                    "83716245",
-                    "10593827",
-                    "67482913",
-                    "35129648",
-                    "94582137"
+                  "40912345",
+                  "72645189",
+                  "18937462",
+                  "56283917",
+                  "09471058",
+                  "83716245",
+                  "10593827",
+                  "67482913",
+                  "35129648",
+                  "94582137"
                 ]
-                },
+              },
               "scheme": {
                 "type": "string",
-                "enum": ["UA-EDR", "AE-ACCI"]
+                "enum": [
+                  "UA-EDR",
+                  "AE-ACCI"
+                ]
               },
               "legalName": {
                 "type": "object",
@@ -49,7 +64,13 @@
           },
           "address": {
             "type": "object",
-            "required": ["addressID", "streetAddress", "locality", "region", "countryName"],
+            "required": [
+              "addressID",
+              "streetAddress",
+              "locality",
+              "region",
+              "countryName"
+            ],
             "properties": {
               "addressID": {
                 "type": "object",
@@ -131,7 +152,11 @@
           },
           "contactPoint": {
             "type": "object",
-            "required": ["name", "telephone", "email"],
+            "required": [
+              "name",
+              "telephone",
+              "email"
+            ],
             "properties": {
               "name": {
                 "type": "object",
@@ -168,11 +193,21 @@
       "maxItems": 5,
       "requireValues": {
         "field": "documentType",
-        "values": ["commercialProposal", "x_registrationFeeApproval", "x_guaranteeApproval"]
+        "values": [
+          "commercialProposal",
+          "x_registrationFeeApproval",
+          "x_guaranteeApproval"
+        ]
       },
       "items": {
         "type": "object",
-        "required": ["title", "description", "documentType", "documentOf", "token"],
+        "required": [
+          "title",
+          "description",
+          "documentType",
+          "documentOf",
+          "token"
+        ],
         "properties": {
           "title": {
             "type": "object",
@@ -210,12 +245,16 @@
           "token": {
             "const": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRzIn0.eyJpZCI6ImY3MDY1N2Y4NmUxMjQ4ZDRhNmNjYjM3YTc1NWNlNDQ1Iiwic2NvcGUiOiJwdWJsaWMiLCJmaWxlbmFtZSI6IjEuZG9jeCIsImRvY3VtZW50VHlwZSI6ImNvbW1lcmNpYWxQcm9wb3NhbCIsImZvcm1hdCI6ImFwcGxpY2F0aW9uL3ZuZC5vcGVueG1sZm9ybWF0cy1vZmZpY2Vkb2N1bWVudC53b3JkcHJvY2Vzc2luZ21sLmRvY3VtZW50Iiwic2hhIjoiNDNiYjc5MjcyZDc2NTkyMWE4NmM4M2ExOGQ0MDJkZWMxZTVlMTQ2YmQxMDZmNjFhYWUwNzJkNmI3M2M2ZGFhNCIsImhhc2giOiJtZDU6Mzc4ZjkyMjQ2ZWRkYzE1YTgyMDQzNGM0MGJhZjIwMmYiLCJkYXRlQ3JlYXRlZCI6IjIwMjYtMDctMzAgMTk6MzA6NDEuNzQzNzExIiwic2l6ZSI6IjEwMjU5IiwiaWF0IjoxNzg1NDM5ODQxfQ.llZ8XcsMoFZ1mvwj7AaBT_XYWLmK-QMUiA2IzkLo5o2eiB8wsbE2-zRegGjmhLgSXIXmuGZj0H02zGR1O_5o7A3Vq7OqmBNiSX6rWWhPBamjX3ifxZbsmJw-3QAvKmheHlYSr27ThnoFYtyBiPdJ_opk1HfHUatHqq-huzX1mZydMGKvrGn3YxkHqAO4X0_q-lfl8L_tm3ul1MLJ4nKIp4ypU50mVQWWiBIhAdlrSAvE5Wt6MeGIh1myuY6ZhXxzqaDDM0F6UNUNUoUr7NOHoNy2e2UTg9sbi_0tfVrVd7SRBIYlDkkvXbLgXjyd4-BlF9VUNKphtSnO4ZvTEtlgSDb9EgLqZ-zIMxbgo2Sa2ofgfvXlGKUQpc3YNZB7NGcKWeFx6EZ-4nzWPT_fjGkTNyy0i96wTfcoLsau0Qj37bOJ1m1AALGYcL8lxgkZqxRd3M1KaTwHcpfGvyuoriUdWCmv0O_FXEKB6_H7Sm7QS1Fm5IOpw0QtEmRajjvKNa9qw_wBr7VsmWUvzLYFw8NMSvetnzg9GnDUzzbO2yHfpDxNyzZojrL008TtTBhFgCVXwq9lamgs1ZziqkbokkWPnYCA_0IefXkJH2Aq0SO-kDHd7bGbuS05TSsPqAfCY1tbhEYtoRZgevjC6HrgPP6is3DAQcrbH8w_lZc5SlO6SC4"
           }
-        }
+        },
+        "tokenFromDocuments": "documentType"
       }
     },
     "value": {
       "type": "object",
-      "required": ["currency", "amount"],
+      "required": [
+        "currency",
+        "amount"
+      ],
       "properties": {
         "currency": {
           "const": "UAH"

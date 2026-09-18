@@ -874,7 +874,8 @@
           "token",
           "title",
           "documentOf"
-        ]
+        ],
+        "tokenFromDocuments": "documentType"
       }
     }
   },
