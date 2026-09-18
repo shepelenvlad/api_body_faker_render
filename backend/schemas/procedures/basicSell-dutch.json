@@ -382,8 +382,8 @@
     "tenderAttempts": {
       "type": "integer",
       "enum": [
-        1,
-        2
+        10,
+        10
       ]
     },
     "items": {
