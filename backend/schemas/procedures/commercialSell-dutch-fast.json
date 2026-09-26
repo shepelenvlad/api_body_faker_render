@@ -1,10 +1,10 @@
 {
-  "title": "ARMA Property — English Fast",
-  "description": "Лот продажу активів АРМА (armaProperty-english-fast)",
+  "title": "Commercial Sell — Dutch Fast",
+  "description": "Продаж комерційної нерухомості, голландський аукціон (commercialSell-dutch-fast)",
   "type": "object",
   "properties": {
     "sellingMethod": {
-      "const": "armaProperty-english-fast"
+      "const": "commercialSell-dutch-fast"
     },
     "auctionPeriod": {
       "type": "object",
@@ -28,14 +28,14 @@
           "type": "object",
           "properties": {
             "id": {
-              "example": "41037901"
+              "example": "00689192"
             },
             "legalName": {
               "type": "object",
               "properties": {
                 "uk_UA": {
                   "type": "string",
-                  "minLength": 10,
+                  "minLength": 20,
                   "maxLength": 150
                 }
               }
@@ -57,7 +57,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "example": "4600000000"
+                  "example": "0120000000"
                 },
                 "scheme": {
                   "const": "koatuu"
@@ -70,7 +70,7 @@
                 "uk_UA": {
                   "type": "string",
                   "minLength": 10,
-                  "maxLength": 50
+                  "maxLength": 60
                 }
               }
             },
@@ -80,7 +80,7 @@
                 "uk_UA": {
                   "type": "string",
                   "minLength": 3,
-                  "maxLength": 30
+                  "maxLength": 40
                 }
               }
             },
@@ -121,11 +121,6 @@
                 }
               }
             },
-            "postalCode": {
-              "type": "string",
-              "minLength": 5,
-              "maxLength": 5
-            },
             "countryName": {
               "type": "object",
               "properties": {
@@ -133,6 +128,11 @@
                   "const": "Україна"
                 }
               }
+            },
+            "postalCode": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 5
             }
           }
         },
@@ -143,9 +143,7 @@
               "type": "object",
               "properties": {
                 "uk_UA": {
-                  "type": "string",
-                  "minLength": 3,
-                  "maxLength": 40
+                  "type": "string"
                 }
               }
             },
@@ -160,201 +158,13 @@
             "email": {
               "type": "string",
               "format": "email"
-            },
-            "url": {
-              "type": "string",
-              "format": "url"
             }
           }
         },
         "representativeInfo": {
           "type": "string",
           "minLength": 20,
-          "maxLength": 150
-        }
-      }
-    },
-    "organizationEntity": {
-      "type": "object",
-      "properties": {
-        "identifier": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "example": "00000000"
-            },
-            "legalName": {
-              "type": "object",
-              "properties": {
-                "uk_UA": {
-                  "type": "string",
-                  "minLength": 10,
-                  "maxLength": 150
-                }
-              }
-            },
-            "scheme": {
-              "const": "UA-EDR"
-            }
-          },
-          "required": [
-            "id",
-            "legalName",
-            "scheme"
-          ]
-        },
-        "address": {
-          "type": "object",
-          "properties": {
-            "addressID": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "4600000000"
-                },
-                "scheme": {
-                  "const": "koatuu"
-                }
-              }
-            },
-            "streetAddress": {
-              "type": "object",
-              "properties": {
-                "uk_UA": {
-                  "type": "string",
-                  "minLength": 10,
-                  "maxLength": 50
-                }
-              }
-            },
-            "locality": {
-              "type": "object",
-              "properties": {
-                "uk_UA": {
-                  "type": "string",
-                  "minLength": 3,
-                  "maxLength": 30
-                }
-              }
-            },
-            "region": {
-              "type": "object",
-              "properties": {
-                "uk_UA": {
-                  "type": "string",
-                  "enum": [
-                    "Автономна Республіка Крим",
-                    "Вінницька область",
-                    "Волинська область",
-                    "Дніпропетровська область",
-                    "Донецька область",
-                    "Житомирська область",
-                    "Закарпатська область",
-                    "Запорізька область",
-                    "Івано-Франківська область",
-                    "Київська область",
-                    "Київ",
-                    "Кіровоградська область",
-                    "Луганська область",
-                    "Львівська область",
-                    "Миколаївська область",
-                    "Одеська область",
-                    "Полтавська область",
-                    "Рівненська область",
-                    "Севастополь",
-                    "Сумська область",
-                    "Тернопільська область",
-                    "Харківська область",
-                    "Херсонська область",
-                    "Хмельницька область",
-                    "Черкаська область",
-                    "Чернівецька область",
-                    "Чернігівська область"
-                  ]
-                }
-              }
-            },
-            "postalCode": {
-              "type": "string",
-              "minLength": 5,
-              "maxLength": 5
-            },
-            "countryName": {
-              "type": "object",
-              "properties": {
-                "uk_UA": {
-                  "const": "Україна"
-                }
-              }
-            }
-          }
-        },
-        "contactPoint": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "object",
-              "properties": {
-                "uk_UA": {
-                  "type": "string",
-                  "minLength": 3,
-                  "maxLength": 40
-                }
-              }
-            },
-            "telephone": {
-              "type": "string",
-              "format": "phone"
-            },
-            "faxNumber": {
-              "type": "string",
-              "format": "phone"
-            },
-            "email": {
-              "type": "string",
-              "format": "email"
-            },
-            "url": {
-              "type": "string",
-              "format": "url"
-            }
-          }
-        },
-        "representativeInfo": {
-          "type": "string",
-          "minLength": 20,
-          "maxLength": 150
-        }
-      }
-    },
-    "contactPoint": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "object",
-          "properties": {
-            "uk_UA": {
-              "type": "string",
-              "minLength": 3,
-              "maxLength": 40
-            }
-          }
-        },
-        "telephone": {
-          "type": "string",
-          "format": "phone"
-        },
-        "faxNumber": {
-          "type": "string",
-          "format": "phone"
-        },
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "url": {
-          "type": "string",
-          "format": "url"
+          "maxLength": 100
         }
       }
     },
@@ -366,7 +176,7 @@
       "properties": {
         "uk_UA": {
           "type": "string",
-          "minLength": 15,
+          "minLength": 10,
           "maxLength": 120
         }
       }
@@ -376,7 +186,7 @@
       "properties": {
         "uk_UA": {
           "type": "string",
-          "minLength": 15,
+          "minLength": 10,
           "maxLength": 200
         }
       }
@@ -388,11 +198,6 @@
           "type": "string",
           "minLength": 10,
           "maxLength": 100
-        },
-        "en_US": {
-          "type": "string",
-          "minLength": 5,
-          "maxLength": 40
         }
       }
     },
@@ -400,6 +205,7 @@
       "type": "array",
       "minItems": 4,
       "maxItems": 4,
+      "uniqueBy": "accountType",
       "items": {
         "type": "object",
         "properties": {
@@ -480,7 +286,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "example": "registrationFee account"
+                          "example": "account"
                         },
                         "scheme": {
                           "const": "AE-ACCI"
@@ -503,17 +309,6 @@
             }
           }
         }
-      },
-      "uniqueBy": "accountType"
-    },
-    "x_additionalInformation": {
-      "type": "object",
-      "properties": {
-        "uk_UA": {
-          "type": "string",
-          "minLength": 10,
-          "maxLength": 100
-        }
       }
     },
     "x_documentRequirements": {
@@ -526,19 +321,13 @@
         }
       }
     },
-    "preparationValue": {
+    "x_additionalInformation": {
       "type": "object",
       "properties": {
-        "currency": {
-          "const": "UAH"
-        },
-        "amount": {
-          "type": "number",
-          "minimum": 100,
-          "maximum": 50000
-        },
-        "valueAddedTaxIncluded": {
-          "type": "boolean"
+        "uk_UA": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 100
         }
       }
     },
@@ -551,15 +340,29 @@
         "amount": {
           "type": "number",
           "minimum": 100,
-          "maximum": 50000
+          "maximum": 500000
         },
         "valueAddedTaxIncluded": {
           "type": "boolean"
         }
-      }
+      },
+      "required": [
+        "currency",
+        "amount"
+      ]
     },
     "valueAddedTaxCharged": {
       "type": "boolean"
+    },
+    "dutchStep": {
+      "type": "object",
+      "properties": {
+        "dutchStepQuantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 99
+        }
+      }
     },
     "guarantee": {
       "type": "object",
@@ -569,8 +372,8 @@
         },
         "amount": {
           "type": "number",
-          "minimum": 100,
-          "maximum": 50000
+          "minimum": 50,
+          "maximum": 5000
         }
       }
     },
@@ -582,7 +385,7 @@
         },
         "amount": {
           "type": "number",
-          "minimum": 100,
+          "minimum": 50,
           "maximum": 5000
         }
       }
@@ -597,7 +400,7 @@
     "items": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 6,
+      "maxItems": 2,
       "items": {
         "type": "object",
         "properties": {
@@ -606,15 +409,13 @@
             "properties": {
               "uk_UA": {
                 "type": "string",
-                "minLength": 20,
+                "minLength": 15,
                 "maxLength": 150
               }
             }
           },
           "quantity": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 5
+            "example": "155"
           },
           "unit": {
             "type": "object",
@@ -631,7 +432,7 @@
                 "const": "CAV"
               },
               "id": {
-                "example": "06000000-2"
+                "example": "03341000-3"
               }
             }
           },
@@ -725,148 +526,34 @@
             "type": "object",
             "properties": {
               "latitude": {
-                "type": "string",
-                "minLength": 5,
-                "maxLength": 12
-              },
-              "longitude": {
-                "type": "string",
-                "minLength": 5,
-                "maxLength": 12
-              },
-              "elevation": {
-                "type": "string",
-                "minLength": 3,
-                "maxLength": 12
-              }
-            }
-          },
-          "itemProps": {
-            "type": "object",
-            "properties": {
-              "landArea": {
-                "type": "number",
-                "minimum": 1,
-                "maximum": 500
-              },
-              "cadastralNumber": {
                 "type": "string"
               },
-              "ownershipType": {
-                "type": "string",
-                "enum": [
-                  "state",
-                  "private",
-                  "municipal",
-                  "compatible",
-                  "unknown"
-                ]
+              "longitude": {
+                "type": "string"
               },
-              "landIntendedUse": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 60
-              },
-              "hasEncumbrances": {
-                "type": "boolean"
-              },
-              "hasJointOwnership": {
-                "type": "boolean"
-              },
-              "hasUtilitiesAvailability": {
-                "type": "boolean"
-              }
-            },
-            "conditionals": [
-              {
-                "if": { "properties": { "hasEncumbrances": { "const": true } } },
-                "then": {
-                  "properties": {
-                    "encumbrances": {
-                      "type": "string",
-                      "enum": [
-                        "arrest",
-                        "collateral",
-                        "restraintsOnAlienation",
-                        "otherEncumbrances"
-                      ]
-                    }
-                  }
-                }
-              },
-              {
-                "if": { "properties": { "hasJointOwnership": { "const": true } } },
-                "then": {
-                  "properties": {
-                    "jointOwnership": {
-                      "type": "string",
-                      "minLength": 10,
-                      "maxLength": 60
-                    }
-                  }
-                }
-              },
-              {
-                "if": { "properties": { "hasUtilitiesAvailability": { "const": true } } },
-                "then": {
-                  "properties": {
-                    "utilitiesAvailability": {
-                      "type": "string",
-                      "minLength": 10,
-                      "maxLength": 60
-                    }
-                  }
-                }
-              }
-            ]
-          },
-          "registrationDetails": {
-            "type": "object",
-            "properties": {
-              "registrationStatus": {
-                "type": "string",
-                "enum": [
-                  "properlyRegistered",
-                  "registrationIsNotRequired",
-                  "notRegistered"
-                ]
-              },
-              "registrationID": {
-                "example": "1234554321"
-              },
-              "registrationDate": {
-                "type": "string",
-                "format": "date-time"
+              "elevation": {
+                "type": "string"
               }
             }
           }
         },
         "required": [
           "description",
-          "quantity",
-          "unit",
-          "classification"
+          "classification",
+          "unit"
         ]
       }
     },
-     "documents": {
+    "documents": {
       "type": "array",
-      "minItems": 4,
+      "minItems": 5,
       "maxItems": 5,
-      "requireValues": {
-        "field": "documentType",
-        "values": [
-          "notice",
-          "technicalSpecifications",
-          "illustration",
-          "contractProforma"
-        ]
-      },
+      "uniqueBy": "documentType",
       "items": {
         "type": "object",
         "properties": {
           "token": {
-            "const": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRzIn0.eyJpZCI6IjlkYzFkMTZmNjU3YTRlNTRhZTA2MDgzM2I5NGIzOTk3Iiwic2NvcGUiOiJwdWJsaWMiLCJmaWxlbmFtZSI6IjEuZG9jeCIsImRvY3VtZW50VHlwZSI6InRlY2huaWNhbFNwZWNpZmljYXRpb25zIiwiZm9ybWF0IjoiYXBwbGljYXRpb24vdm5kLm9wZW54bWxmb3JtYXRzLW9mZmljZWRvY3VtZW50LndvcmRwcm9jZXNzaW5nbWwuZG9jdW1lbnQiLCJzaGEiOiI0M2JiNzkyNzJkNzY1OTIxYTg2YzgzYTE4ZDQwMmRlYzFlNWUxNDZiZDEwNmY2MWFhZTA3MmQ2YjczYzZkYWE0IiwiaGFzaCI6Im1kNTozNzhmOTIyNDZlZGRjMTVhODIwNDM0YzQwYmFmMjAyZiIsImRhdGVDcmVhdGVkIjoiMjAyNi0wOS0xOCAwODo0Njo1OS41OTI4MzYiLCJzaXplIjoiMTAyNTkiLCJpYXQiOjE3ODk3MjEyMTl9.TBsur17Zl8Z9aGdzH-HOCCPctKDO2OTS8erSaPXpATyK5rPqWmiBDFL-diiGy52KRixAPqMBYywm03tNKQAXBSJqcjH80WJ8sVahIP8WnhZIy7GD7Hs_oBjtoELh34u5jXmZuFuvelcS0Y3kyM79muhsoAEOCzJq313rCncDE-0qmb1zRHhPWgbsGIv_t2fqJixu1IXdwMPNmLuocZJvKPbhbkPPGGTuS2H9k0fO73CSotqtEe1lmwIKQGaqQzoJFeW0f_w6Ypp3Bn-blXbYfXQSQnXGLMd9uK9Su3A9BfBdlPd35TgLps2e9GOEnlPXM2caPxxNHypTh1LWphCa3A27y7XsjNQrYM5PQZfBB3aYovdwCRXfJjsMnXDFi9S9xBxTs_-CAjdCDBLWT4i9yx53IpwOdKnKQsp0osychC3FrOGACdukS8jzCCLYIlsvL3XlZ8txCT0ZYCT_OsGhcLh7-B0FVgQ9aOZVWsn-kCZ2vs-58pvJZvzFp_x2sTqQ3am6L3q38zoYRRRBiWAWFaXcVRjfmKKeHruOH78TEDDpviqoVacPm_XD13cbetaIK-q_jdzzz4yw9mW-8CtCHRapN3YPTj-0WpE6Qxi7nWmLirTwkBXtYUWzRdr7IGChzmldFDkA-GGB2TmEh3CP5hz9G2W9R3bVEGO1KtXFW-c"
+            "type": "string"
           },
           "title": {
             "type": "object",
@@ -874,7 +561,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -889,7 +576,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -905,9 +592,10 @@
             "type": "string",
             "enum": [
               "notice",
-              "illustration",
               "technicalSpecifications",
-              "contractProforma"
+              "evaluationCriteria",
+              "contractProforma",
+              "x_presentation"
             ]
           },
           "index": {
@@ -938,24 +626,6 @@
         ],
         "tokenFromDocuments": "documentType"
       }
-    },
-    "minNumberOfQualifiedBids": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 2
-    },
-    "minimalStep": {
-      "type": "object",
-      "properties": {
-        "currency": {
-          "const": "UAH"
-        },
-        "amount": {
-          "type": "number",
-          "minimum": 1,
-          "maximum": 1000
-        }
-      }
     }
   },
   "if": {
@@ -969,13 +639,40 @@
   "else": {
     "properties": {
       "previousAuctionId": {
-        "example": "UA-PS-1122-33-44-000000-0"
+        "example": "CLD001-UA-20241119-37144"
+      },
+      "discount": {
+        "type": "object",
+        "properties": {
+          "discount": {
+            "type": "boolean"
+          },
+          "discountPercent": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 90
+          },
+          "previousAuctionValue": {
+            "type": "object",
+            "properties": {
+              "currency": {
+                "const": "UAH"
+              },
+              "amount": {
+                "type": "number",
+                "minimum": 100,
+                "maximum": 500000
+              }
+            }
+          }
+        }
       }
     }
   },
   "required": [
     "sellingMethod",
     "auctionPeriod",
+    "sellingEntity",
     "title",
     "value",
     "items"

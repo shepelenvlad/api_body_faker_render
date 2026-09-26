@@ -1,10 +1,10 @@
 {
-  "title": "Commercial Property Lease — Dutch Fast",
-  "description": "Оренда комерційної нерухомості, голландський аукціон (commercialPropertyLease-dutch-fast)",
+  "title": "Basic Sell — Dutch Fast",
+  "description": "Лот продажу нерухомого майна (basicSell-dutch-fast)",
   "type": "object",
   "properties": {
     "sellingMethod": {
-      "const": "commercialPropertyLease-dutch-fast"
+      "const": "basicSell-dutch-fast"
     },
     "auctionPeriod": {
       "type": "object",
@@ -28,7 +28,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "example": "012345678"
+              "example": "40075815"
             },
             "legalName": {
               "type": "object",
@@ -41,7 +41,7 @@
               }
             },
             "scheme": {
-              "const": "UA-ID-CARD"
+              "const": "UA-EDR"
             }
           },
           "required": [
@@ -53,17 +53,6 @@
         "address": {
           "type": "object",
           "properties": {
-            "addressID": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "4600000000"
-                },
-                "scheme": {
-                  "const": "koatuu"
-                }
-              }
-            },
             "streetAddress": {
               "type": "object",
               "properties": {
@@ -176,7 +165,7 @@
       "properties": {
         "uk_UA": {
           "type": "string",
-          "minLength": 10,
+          "minLength": 15,
           "maxLength": 120
         }
       }
@@ -186,7 +175,7 @@
       "properties": {
         "uk_UA": {
           "type": "string",
-          "minLength": 10,
+          "minLength": 15,
           "maxLength": 200
         }
       }
@@ -200,186 +189,6 @@
           "maxLength": 100
         }
       }
-    },
-    "schedule": {
-      "type": "object",
-      "properties": {
-        "hoursBy": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 24
-            },
-            "by": {
-              "const": "day"
-            }
-          }
-        },
-        "daysBy": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 31
-            },
-            "by": {
-              "const": "month"
-            }
-          }
-        },
-        "period": {
-          "type": "array",
-          "minItems": 1,
-          "maxItems": 1,
-          "items": {
-            "type": "object",
-            "properties": {
-              "startDate": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "endDate": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "weekdays": {
-                "type": "array",
-                "minItems": 1,
-                "maxItems": 1,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "startTime": {
-                      "type": "string",
-                      "example": "09:00"
-                    },
-                    "endTime": {
-                      "type": "string",
-                      "example": "18:00"
-                    },
-                    "weekday": {
-                      "type": "object",
-                      "properties": {
-                        "uk_UA": {
-                          "type": "string",
-                          "enum": [
-                            "Понеділок",
-                            "Вівторок",
-                            "Середа",
-                            "Четвер",
-                            "П'ятниця",
-                            "Субота",
-                            "Неділя"
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "x_documentRequirements": {
-      "type": "object",
-      "properties": {
-        "uk_UA": {
-          "type": "string",
-          "minLength": 10,
-          "maxLength": 100
-        }
-      }
-    },
-    "x_additionalInformation": {
-      "type": "object",
-      "properties": {
-        "uk_UA": {
-          "type": "string",
-          "minLength": 10,
-          "maxLength": 100
-        }
-      }
-    },
-    "value": {
-      "type": "object",
-      "properties": {
-        "currency": {
-          "const": "UAH"
-        },
-        "amount": {
-          "type": "number",
-          "minimum": 100,
-          "maximum": 50000
-        },
-        "valueAddedTaxIncluded": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "currency",
-        "amount"
-      ]
-    },
-    "valuePeriod": {
-      "type": "string",
-      "enum": [
-        "day",
-        "month",
-        "quarter",
-        "year"
-      ]
-    },
-    "leaseDuration": {
-      "type": "string",
-      "example": "P2Y11M"
-    },
-    "guarantee": {
-      "type": "object",
-      "properties": {
-        "currency": {
-          "const": "UAH"
-        },
-        "amount": {
-          "type": "number",
-          "minimum": 50,
-          "maximum": 5000
-        }
-      }
-    },
-    "registrationFee": {
-      "type": "object",
-      "properties": {
-        "currency": {
-          "const": "UAH"
-        },
-        "amount": {
-          "type": "number",
-          "minimum": 100,
-          "maximum": 10000
-        }
-      }
-    },
-    "dutchStep": {
-      "type": "object",
-      "properties": {
-        "dutchStepQuantity": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 99
-        }
-      }
-    },
-    "tenderAttempts": {
-      "type": "integer",
-      "enum": [
-        1,
-        2
-      ]
     },
     "bankAccounts": {
       "type": "array",
@@ -395,7 +204,7 @@
               "registrationFee",
               "guarantee",
               "other",
-              "lease"
+              "payment"
             ]
           },
           "accounts": {
@@ -466,10 +275,10 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "example": "account"
+                          "example": "12312312"
                         },
                         "scheme": {
-                          "const": "AE-ACCI"
+                          "const": "UA-EDR"
                         },
                         "legalName": {
                           "type": "object",
@@ -491,10 +300,96 @@
         }
       }
     },
+    "x_documentRequirements": {
+      "type": "object",
+      "properties": {
+        "uk_UA": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 100
+        }
+      }
+    },
+    "x_additionalInformation": {
+      "type": "object",
+      "properties": {
+        "uk_UA": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 100
+        }
+      }
+    },
+    "value": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "const": "UAH"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 100,
+          "maximum": 500000
+        },
+        "valueAddedTaxIncluded": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "currency",
+        "amount"
+      ]
+    },
+    "valueAddedTaxCharged": {
+      "type": "boolean"
+    },
+    "dutchStep": {
+      "type": "object",
+      "properties": {
+        "dutchStepQuantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 99
+        }
+      }
+    },
+    "guarantee": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "const": "UAH"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 50,
+          "maximum": 5000
+        }
+      }
+    },
+    "registrationFee": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "const": "UAH"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 100,
+          "maximum": 5000
+        }
+      }
+    },
+    "tenderAttempts": {
+      "type": "integer",
+      "enum": [
+        10,
+        10
+      ]
+    },
     "items": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 2,
+      "maxItems": 4,
       "items": {
         "type": "object",
         "properties": {
@@ -505,15 +400,8 @@
                 "type": "string",
                 "minLength": 15,
                 "maxLength": 150
-              },
-              "en_US": {
-                "type": "string",
-                "example": "string"
               }
             }
-          },
-          "quantity": {
-            "example": "155"
           },
           "classification": {
             "type": "object",
@@ -522,7 +410,7 @@
                 "const": "CAV"
               },
               "id": {
-                "const": "05000000-5"
+                "example": "03100000-2"
               }
             }
           },
@@ -530,23 +418,14 @@
             "type": "object",
             "properties": {
               "code": {
-                "const": "MTK"
+                "const": "H87"
               }
             }
           },
-          "location": {
-            "type": "object",
-            "properties": {
-              "latitude": {
-                "type": "string"
-              },
-              "longitude": {
-                "type": "string"
-              },
-              "elevation": {
-                "type": "string"
-              }
-            }
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
           },
           "address": {
             "type": "object",
@@ -634,127 +513,17 @@
               }
             }
           },
-          "itemProps": {
+          "location": {
             "type": "object",
             "properties": {
-              "quantityAndNomenclature": {
-                "type": "string",
-                "minLength": 15,
-                "maxLength": 100
+              "latitude": {
+                "type": "string"
               },
-              "workplacesQuantity": {
-                "type": "integer",
-                "minimum": 1,
-                "maximum": 1000
+              "longitude": {
+                "type": "string"
               },
-              "buildingsInformation": {
-                "type": "string",
-                "minLength": 15,
-                "maxLength": 150
-              },
-              "landPlotInformation": {
-                "type": "string",
-                "minLength": 15,
-                "maxLength": 150
-              },
-              "landProps": {
-                "type": "object",
-                "properties": {
-                  "landArea": {
-                    "type": "number",
-                    "minimum": 1,
-                    "maximum": 1000
-                  },
-                  "cadastralNumber": {
-                    "type": "string"
-                  },
-                  "ownershipType": {
-                    "type": "string",
-                    "enum": [
-                      "state",
-                      "private",
-                      "municipal",
-                      "unknown"
-                    ]
-                  },
-                  "landIntendedUse": {
-                    "type": "string",
-                    "minLength": 10,
-                    "maxLength": 80
-                  },
-                  "hasEncumbrances": {
-                    "type": "boolean"
-                  },
-                  "hasJointOwnership": {
-                    "type": "boolean"
-                  },
-                  "hasUtilitiesAvailability": {
-                    "type": "boolean"
-                  }
-                },
-                "conditionals": [
-                  {
-                    "if": {
-                      "properties": {
-                        "hasEncumbrances": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "encumbrances": {
-                          "type": "string",
-                          "enum": [
-                            "arrest",
-                            "otherEncumbrances"
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "if": {
-                      "properties": {
-                        "hasJointOwnership": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "jointOwnership": {
-                          "type": "string",
-                          "minLength": 10,
-                          "maxLength": 80
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "if": {
-                      "properties": {
-                        "hasUtilitiesAvailability": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "utilitiesAvailability": {
-                          "type": "string",
-                          "minLength": 10,
-                          "maxLength": 80
-                        }
-                      }
-                    }
-                  }
-                ]
-              },
-              "mainObligations": {
-                "type": "string",
-                "minLength": 20,
-                "maxLength": 300
+              "elevation": {
+                "type": "string"
               }
             }
           },
@@ -764,9 +533,10 @@
               "registrationStatus": {
                 "type": "string",
                 "enum": [
-                  "registrationIsNotRequired",
                   "properlyRegistered",
-                  "notRegistered"
+                  "oldRegistration",
+                  "notRegistered",
+                  "registrationIsNotRequired"
                 ]
               },
               "registrationID": {
@@ -778,34 +548,27 @@
                 "type": "string",
                 "format": "date-time"
               }
-            },
-            "required": [
-              "registrationStatus"
-            ]
+            }
           }
         },
         "required": [
           "description",
           "classification",
-          "unit"
+          "unit",
+          "quantity"
         ]
       }
     },
     "documents": {
       "type": "array",
-      "minItems": 2,
-      "maxItems": 3,
-      "requireValues": {
-        "field": "documentType",
-        "values": [
-          "notice"
-        ]
-      },
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueBy": "documentType",
       "items": {
         "type": "object",
         "properties": {
           "token": {
-            "const": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRzIn0.eyJpZCI6ImM2Y2UyNDY2ZDg4MTQwNzc5NDk4YTk4ZTllMzU2YzczIiwic2NvcGUiOiJwdWJsaWMiLCJmaWxlbmFtZSI6IjEuZG9jeCIsImRvY3VtZW50VHlwZSI6ImNvbnRyYWN0UHJvZm9ybWEiLCJmb3JtYXQiOiJhcHBsaWNhdGlvbi92bmQub3BlbnhtbGZvcm1hdHMtb2ZmaWNlZG9jdW1lbnQud29yZHByb2Nlc3NpbmdtbC5kb2N1bWVudCIsInNoYSI6IjQzYmI3OTI3MmQ3NjU5MjFhODZjODNhMThkNDAyZGVjMWU1ZTE0NmJkMTA2ZjYxYWFlMDcyZDZiNzNjNmRhYTQiLCJoYXNoIjoibWQ1OjM3OGY5MjI0NmVkZGMxNWE4MjA0MzRjNDBiYWYyMDJmIiwiZGF0ZUNyZWF0ZWQiOiIyMDI2LTA3LTMxIDEyOjQxOjE5LjI4NDA4MyIsInNpemUiOiIxMDI1OSIsImlhdCI6MTc4NTUwMTY3OX0.qYtHUGmgihQjZauDbEgzYg7LoJRchbWcsWR9wB7njdvoLhPeKXVFm-RzDr01DAy75Xj17c-lJd8yYiek_iW_qppBqaNoAsL_L7CHHyWENcg6x_qEpGX7pXl_VoeTtLjRgofULA9s4KZiVtoPcEWXLWAu7nnp9DxlkHyblm413TB6ebdYLZAAAXx3_1NZ38jLDoLw67KpjUbi-X6a79WthTXH6-Wy9rxYlOulg0f_Qfwj5SgMzQwQMUKwAr8Vfm6o4yXe9FYrIrf_5gpUHMsbQl2zCv08nrADLu1UVDelT8R-xRmS2WK7nEI6MNzJUJGzqsAwokfHLTYAxVhH9zcQC9znjxYXFqVI0e6GHmsmXTNVc2JO1Kwfs1Mjmb01KBVAWG3A_umeYmb2va8pJkRRFUFW5B9tDIFNxHfwb0hilFtkVR3hCQ6-jae8IPS1uYxklvneOd2OGgqZGl4iyPQ3jBE8monydWah3GN1tahZkhV5VX5xz5eCLo1c_bLDPSgR0gWi_9WTlSyETfR0lAbH3glwgJFzaty70avi_Z8b8i3PsPK3lV2IVrc0ay_YSNBbVJOOCy-5-dpEHdIdXpXOKn8hiwrJdPRRYnYNkhtBbpIx_u8PIW3fE1Cam07kPjRb3mKRURSWBVz6wyWCWxd6HH9ysHTyP1r70hyUAwllFlA"
+            "type": "string"
           },
           "title": {
             "type": "object",
@@ -813,7 +576,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -828,7 +591,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -844,13 +607,15 @@
             "type": "string",
             "enum": [
               "notice",
-              "illustration",
-              "property_doc"
+              "technicalSpecifications",
+              "evaluationCriteria",
+              "contractProforma",
+              "x_presentation"
             ]
           },
           "index": {
             "type": "integer",
-            "minimum": -1,
+            "minimum": 1,
             "maximum": 50
           },
           "format": {
@@ -889,40 +654,13 @@
   "else": {
     "properties": {
       "previousAuctionId": {
-        "example": "CLE001-UA-20210915-76732"
-      },
-      "discount": {
-        "type": "object",
-        "properties": {
-          "discount": {
-            "type": "boolean"
-          },
-          "discountPercent": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 90
-          },
-          "previousAuctionValue": {
-            "type": "object",
-            "properties": {
-              "currency": {
-                "const": "UAH"
-              },
-              "amount": {
-                "type": "number",
-                "minimum": 100,
-                "maximum": 500000
-              }
-            }
-          }
-        }
+        "example": "UA-PS-1122-33-44-000000-0"
       }
     }
   },
   "required": [
     "sellingMethod",
     "auctionPeriod",
-    "sellingEntity",
     "title",
     "value",
     "items"

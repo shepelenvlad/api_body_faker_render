@@ -859,14 +859,9 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 2,
-      "maxItems": 3,
-      "requireValues": {
-        "field": "documentType",
-        "values": [
-          "technicalSpecifications"
-        ]
-      },
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueBy": "documentType",
       "items": {
         "type": "object",
         "properties": {
@@ -879,7 +874,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -894,7 +889,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -909,8 +904,11 @@
           "documentType": {
             "type": "string",
             "enum": [
+              "notice",
               "technicalSpecifications",
-              "illustration"
+              "evaluationCriteria",
+              "contractProforma",
+              "x_presentation"
             ]
           },
           "index": {

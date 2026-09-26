@@ -889,19 +889,14 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 2,
-      "maxItems": 3,
-      "requireValues": {
-        "field": "documentType",
-        "values": [
-          "technicalSpecifications"
-        ]
-      },
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueBy": "documentType",
       "items": {
         "type": "object",
         "properties": {
           "token": {
-            "const": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRzIn0.eyJpZCI6ImM0Y2QyNjJkNzIyYTRlZjI5MTI2NjNjZWI4ODYwMDg5Iiwic2NvcGUiOiJwdWJsaWMiLCJmaWxlbmFtZSI6IjEuZG9jeCIsImRvY3VtZW50VHlwZSI6InRlY2huaWNhbFNwZWNpZmljYXRpb25zIiwiZm9ybWF0IjoiYXBwbGljYXRpb24vdm5kLm9wZW54bWxmb3JtYXRzLW9mZmljZWRvY3VtZW50LndvcmRwcm9jZXNzaW5nbWwuZG9jdW1lbnQiLCJzaGEiOiI0M2JiNzkyNzJkNzY1OTIxYTg2YzgzYTE4ZDQwMmRlYzFlNWUxNDZiZDEwNmY2MWFhZTA3MmQ2YjczYzZkYWE0IiwiaGFzaCI6Im1kNTozNzhmOTIyNDZlZGRjMTVhODIwNDM0YzQwYmFmMjAyZiIsImRhdGVDcmVhdGVkIjoiMjAyNi0wOS0xNCAwMTo1NDozOC4yMTcyNTgiLCJzaXplIjoiMTAyNTkiLCJpYXQiOjE3ODkzNTA4Nzh9.Y2T4gl4lFiYQQVOIfOk2pN6Z2cC1q_babhIdCtaq1NKtYYoqv8T42H78znl5b-FcwRRE0H9WLet6vCkybMaFH2YfkyfVcPAI2qN5VNrCJInzgpbQ6bKjRIoeZa4kpbWwJDo8VrLS5bmIJvbTLC2sNyV1JpT2XkZ9ZduxEK5l35Tz0IKACnzWgYM1K5yIMs_db6fBzyJXdtTAPx4hsIXy1UjX8O557jc6yII5lCpxYEY6h-iEsZEvzjO4m9l-7N0BCTqDsFAOkGJSmVd24FEn1ffZVgO72ffzs86fz7QzE4L0CYLyTAcuU2gtE5SaKvoQx7KBZzgg9nvO-tqUE_ZOxC-CTsaPheydN-6AVYD_nGGrcL6LlOG7dPj1HMCbrs0kcI0eNEEwuHxO5kcKCiDH4lnNlNoFfCgE-NQKrPfIXdrPY6EfxDIOaDOlPD0-EmzLL3P5_yq3slFlvUedRRSyp0VfGiqx_AzvRPr8V5_vpzm4miiWJFPk0CvggjJMTPm4kTQvY5cgsMQOwjlKcxy741Ug9IYvmazmbXSbY6yQXlQ7ff3bKPs8DJnKarIJ_nF486e5JHv2Oqtbberxul1sc_iVUldVWFNSnejipV6XBWpmJuijpWJcbN69Wug7UVIxEJzOkgPBnBNVZN1kuUeRbnj3RhRDRfVV9s75-GCw0e0"
+            "type": "string"
           },
           "title": {
             "type": "object",
@@ -909,7 +904,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -924,7 +919,7 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
-                "maxLength": 40
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
@@ -939,8 +934,11 @@
           "documentType": {
             "type": "string",
             "enum": [
+              "notice",
               "technicalSpecifications",
-              "illustration"
+              "evaluationCriteria",
+              "contractProforma",
+              "x_presentation"
             ]
           },
           "index": {

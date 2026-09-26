@@ -1,10 +1,10 @@
 {
-  "title": "Regulations Property Lease — Priority English Fast",
-  "description": "Лот пріоритетної оренди нерухомого майна за регуляторними ставками, з поточним орендарем (regulationsPropertyLease-priorityEnglish-fast)",
+  "title": "Commercial Property Lease — Priority English Fast",
+  "description": "Оренда комерційної нерухомості з переважним правом орендаря, англійський аукціон (commercialPropertyLease-priorityEnglish-fast)",
   "type": "object",
   "properties": {
     "sellingMethod": {
-      "const": "regulationsPropertyLease-priorityEnglish-fast"
+      "const": "commercialPropertyLease-priorityEnglish-fast"
     },
     "auctionPeriod": {
       "type": "object",
@@ -39,7 +39,7 @@
                     "uk_UA": {
                       "type": "string",
                       "minLength": 10,
-                      "maxLength": 80
+                      "maxLength": 60
                     },
                     "en_US": {
                       "type": "string",
@@ -128,6 +128,11 @@
                     }
                   }
                 },
+                "postalCode": {
+                  "type": "string",
+                  "minLength": 5,
+                  "maxLength": 5
+                },
                 "countryName": {
                   "type": "object",
                   "properties": {
@@ -135,11 +140,6 @@
                       "const": "Україна"
                     }
                   }
-                },
-                "postalCode": {
-                  "type": "string",
-                  "minLength": 5,
-                  "maxLength": 5
                 }
               }
             },
@@ -329,7 +329,7 @@
       "properties": {
         "uk_UA": {
           "type": "string",
-          "minLength": 15,
+          "minLength": 10,
           "maxLength": 120
         }
       }
@@ -339,7 +339,7 @@
       "properties": {
         "uk_UA": {
           "type": "string",
-          "minLength": 15,
+          "minLength": 10,
           "maxLength": 200
         }
       }
@@ -354,7 +354,7 @@
         },
         "en_US": {
           "type": "string",
-          "default": ""
+          "example": "string"
         }
       }
     },
@@ -367,7 +367,7 @@
             "value": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 23
+              "maximum": 24
             },
             "by": {
               "const": "day"
@@ -380,7 +380,7 @@
             "value": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 28
+              "maximum": 31
             },
             "by": {
               "const": "month"
@@ -410,9 +410,11 @@
                   "type": "object",
                   "properties": {
                     "startTime": {
+                      "type": "string",
                       "example": "09:00"
                     },
                     "endTime": {
+                      "type": "string",
                       "example": "18:00"
                     },
                     "weekday": {
@@ -455,8 +457,10 @@
     },
     "minNumberOfQualifiedBids": {
       "type": "integer",
-      "minimum": 1,
-      "maximum": 2
+      "enum": [
+        1,
+        2
+      ]
     },
     "bankAccounts": {
       "type": "array",
@@ -471,8 +475,8 @@
             "enum": [
               "registrationFee",
               "guarantee",
-              "organizer",
-              "lease"
+              "lease",
+              "other"
             ]
           },
           "accounts": {
@@ -502,6 +506,22 @@
                     }
                   }
                 },
+                "accountIdentifications": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "example": "UA123456789012345678908765432"
+                      },
+                      "scheme": {
+                        "const": "UA-IBAN"
+                      }
+                    }
+                  }
+                },
                 "paymentPurpose": {
                   "type": "object",
                   "properties": {
@@ -517,22 +537,6 @@
                     }
                   }
                 },
-                "accountIdentifications": {
-                  "type": "array",
-                  "minItems": 1,
-                  "maxItems": 1,
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "example": "UA111111111111111111111111111"
-                      },
-                      "scheme": {
-                        "const": "UA-IBAN"
-                      }
-                    }
-                  }
-                },
                 "currency": {
                   "const": "UAH"
                 },
@@ -543,7 +547,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "example": "account holder id"
+                          "example": "account"
                         },
                         "scheme": {
                           "const": "AE-ACCI"
@@ -597,7 +601,7 @@
         "amount": {
           "type": "number",
           "minimum": 100,
-          "maximum": 500000
+          "maximum": 50000
         },
         "valueAddedTaxIncluded": {
           "type": "boolean"
@@ -619,57 +623,47 @@
         },
         "amount": {
           "type": "number",
-          "minimum": 1,
-          "maximum": 1000
+          "minimum": 10,
+          "maximum": 5000
         }
       }
     },
     "valuePeriod": {
       "type": "string",
       "enum": [
-        "hour",
         "day",
         "month",
+        "quarter",
         "year"
       ]
     },
     "leaseDuration": {
+      "type": "string",
       "example": "P2Y11M"
     },
     "discount": {
       "type": "object",
       "properties": {
+        "previousAuctionValue": {
+          "type": "object",
+          "properties": {
+            "currency": {
+              "const": "UAH"
+            },
+            "amount": {
+              "type": "number",
+              "minimum": 100,
+              "maximum": 500000
+            }
+          }
+        },
+        "discountPercent": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 90
+        },
         "discount": {
           "type": "boolean"
-        }
-      },
-      "if": {
-        "properties": {
-          "discount": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "previousAuctionValue": {
-            "type": "object",
-            "properties": {
-              "currency": {
-                "const": "UAH"
-              },
-              "amount": {
-                "type": "number",
-                "minimum": 100,
-                "maximum": 500000
-              }
-            }
-          },
-          "discountPercent": {
-            "type": "number",
-            "minimum": 1,
-            "maximum": 50
-          }
         }
       }
     },
@@ -681,7 +675,7 @@
         },
         "amount": {
           "type": "number",
-          "minimum": 1000,
+          "minimum": 100,
           "maximum": 50000
         }
       }
@@ -695,7 +689,7 @@
         "amount": {
           "type": "number",
           "minimum": 100,
-          "maximum": 1000
+          "maximum": 5000
         }
       }
     },
@@ -706,10 +700,13 @@
         2
       ]
     },
+    "previousAuctionId": {
+      "example": "CLD001-UA-20241119-37144"
+    },
     "items": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 4,
+      "maxItems": 2,
       "items": {
         "type": "object",
         "properties": {
@@ -718,14 +715,17 @@
             "properties": {
               "uk_UA": {
                 "type": "string",
-                "minLength": 10,
-                "maxLength": 100
+                "minLength": 15,
+                "maxLength": 150
               },
               "en_US": {
                 "type": "string",
-                "default": ""
+                "example": "string"
               }
             }
+          },
+          "quantity": {
+            "example": "155"
           },
           "classification": {
             "type": "object",
@@ -734,7 +734,29 @@
                 "const": "CAV"
               },
               "id": {
-                "example": "04000000-8"
+                "const": "05000000-5"
+              }
+            }
+          },
+          "additionalClassifications": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "properties": {
+                "scheme": {
+                  "type": "string",
+                  "enum": [
+                    "CPVS",
+                    "CVZU"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 10
+                }
               }
             }
           },
@@ -742,14 +764,9 @@
             "type": "object",
             "properties": {
               "code": {
-                "const": "H87"
+                "const": "MTK"
               }
             }
-          },
-          "quantity": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 1000
           },
           "location": {
             "type": "object",
@@ -854,200 +871,124 @@
           "itemProps": {
             "type": "object",
             "properties": {
-              "totalBuildingArea": {
-                "type": "number",
-                "minimum": 10,
-                "maximum": 10000
-              },
-              "totalObjectArea": {
-                "type": "number",
-                "minimum": 10,
-                "maximum": 10000
-              },
-              "usableArea": {
-                "type": "number",
-                "minimum": 10,
-                "maximum": 10000
-              },
-              "constructionYear": {
-                "type": "integer",
-                "minimum": 1930,
-                "maximum": 2020
-              },
-              "constructionTechnology": {
+              "quantityAndNomenclature": {
                 "type": "string",
-                "enum": [
-                  "monolithicFrame",
-                  "brick",
-                  "panel",
-                  "other"
-                ]
+                "minLength": 15,
+                "maxLength": 100
               },
-              "livingArea": {
-                "type": "number",
-                "minimum": 5,
-                "maximum": 500
-              },
-              "kitchenArea": {
-                "type": "number",
-                "minimum": 3,
-                "maximum": 100
-              },
-              "landArea": {
-                "type": "number",
+              "workplacesQuantity": {
+                "type": "integer",
                 "minimum": 1,
                 "maximum": 1000
               },
-              "locationInBuilding": {
-                "type": "string",
-                "enum": [
-                  "attic",
-                  "basement",
-                  "groundFloor",
-                  "upperFloor"
-                ]
-              },
-              "floors": {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 2
-              },
-              "generalCondition": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 100
-              },
-              "serviceElectricity": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "powerSupplyCapacity": {
-                "type": "integer",
-                "minimum": 1,
-                "maximum": 200
-              },
-              "powerSupplyClass": {
-                "type": "string",
-                "enum": [
-                  "under50",
-                  "over50"
-                ]
-              },
-              "serviceWater": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceSewerage": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceGas": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceCentralHeating": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceAutonomousHeating": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceHeatingCounter": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceVentilation": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceAirConditioning": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "servicePhone": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceTV": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceInternet": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceElevator": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceSecurityAlarm": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "serviceFireAlarm": {
-                "type": "string",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              },
-              "servicesDescription": {
-                "type": "string",
-                "minLength": 15,
-                "maxLength": 100
-              },
-              "servicesAccounting": {
+              "buildingsInformation": {
                 "type": "string",
                 "minLength": 15,
                 "maxLength": 150
               },
-              "landTax": {
+              "landPlotInformation": {
                 "type": "string",
                 "minLength": 15,
                 "maxLength": 150
+              },
+              "landProps": {
+                "type": "object",
+                "properties": {
+                  "landArea": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 1000
+                  },
+                  "cadastralNumber": {
+                    "type": "string"
+                  },
+                  "ownershipType": {
+                    "type": "string",
+                    "enum": [
+                      "state",
+                      "private",
+                      "municipal",
+                      "unknown"
+                    ]
+                  },
+                  "landIntendedUse": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 80
+                  },
+                  "hasEncumbrances": {
+                    "type": "boolean"
+                  },
+                  "hasJointOwnership": {
+                    "type": "boolean"
+                  },
+                  "hasUtilitiesAvailability": {
+                    "type": "boolean"
+                  }
+                },
+                "conditionals": [
+                  {
+                    "if": {
+                      "properties": {
+                        "hasEncumbrances": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "encumbrances": {
+                          "type": "string",
+                          "enum": [
+                            "arrest",
+                            "otherEncumbrances"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "hasJointOwnership": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "jointOwnership": {
+                          "type": "string",
+                          "minLength": 10,
+                          "maxLength": 80
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "hasUtilitiesAvailability": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "utilitiesAvailability": {
+                          "type": "string",
+                          "minLength": 10,
+                          "maxLength": 80
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "mainObligations": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 300
               }
             }
           },
@@ -1057,40 +998,36 @@
               "registrationStatus": {
                 "type": "string",
                 "enum": [
+                  "registrationIsNotRequired",
                   "properlyRegistered",
-                  "registrationIsNotRequired"
+                  "notRegistered"
                 ]
               },
               "registrationID": {
-                "type": "string",
-                "minLength": 5,
-                "maxLength": 12
+                "example": "1234554321"
               },
               "registrationDate": {
                 "type": "string",
                 "format": "date-time"
               }
-            }
+            },
+            "required": [
+              "registrationStatus"
+            ]
           }
         },
         "required": [
           "description",
           "classification",
-          "unit",
-          "quantity"
+          "unit"
         ]
       }
     },
     "documents": {
       "type": "array",
-      "minItems": 2,
-      "maxItems": 4,
-      "requireValues": {
-        "field": "documentType",
-        "values": [
-          "contractProforma"
-        ]
-      },
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueBy": "documentType",
       "items": {
         "type": "object",
         "properties": {
@@ -1103,6 +1040,11 @@
               "uk_UA": {
                 "type": "string",
                 "minLength": 5,
+                "maxLength": 60
+              },
+              "en_US": {
+                "type": "string",
+                "minLength": 5,
                 "maxLength": 40
               }
             }
@@ -1111,6 +1053,11 @@
             "type": "object",
             "properties": {
               "uk_UA": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 60
+              },
+              "en_US": {
                 "type": "string",
                 "minLength": 5,
                 "maxLength": 40
@@ -1123,9 +1070,31 @@
           "documentType": {
             "type": "string",
             "enum": [
+              "notice",
+              "technicalSpecifications",
+              "evaluationCriteria",
               "contractProforma",
-              "illustration",
-              "technicalSpecifications"
+              "x_presentation"
+            ]
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "application/pdf",
+              "application/msword",
+              "image/jpeg",
+              "image/png"
+            ]
+          },
+          "language": {
+            "type": "integer",
+            "enum": [
+              0
             ]
           }
         },
@@ -1138,24 +1107,10 @@
       }
     }
   },
-  "if": {
-    "properties": {
-      "tenderAttempts": {
-        "const": 1
-      }
-    }
-  },
-  "then": {},
-  "else": {
-    "properties": {
-      "previousAuctionId": {
-        "example": "RLD001-UA-20241119-37144"
-      }
-    }
-  },
   "required": [
     "sellingMethod",
     "auctionPeriod",
+    "relatedOrganizations",
     "title",
     "value",
     "items"

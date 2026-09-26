@@ -1,10 +1,10 @@
 {
-  "title": "Renewables — Multi Awards Fast Manual",
+  "title": "Renewables — Multi Awards Fast",
   "description": "Аукціон з розподілу квоти підтримки відновлюваної енергетики (renewables-multiAwards-fast-manual)",
   "type": "object",
   "properties": {
     "sellingMethod": {
-      "const": "renewables-multiAwards-fast-manual"
+      "const": "renewables-multiAwards-fast"
     },
     "auctionPeriod": {
       "type": "object",
@@ -377,15 +377,9 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 3,
-      "maxItems": 3,
+      "minItems": 5,
+      "maxItems": 5,
       "uniqueBy": "documentType",
-      "requireValues": {
-        "field": "documentType",
-        "values": [
-          "contractProforma"
-        ]
-      },
       "items": {
         "type": "object",
         "properties": {
@@ -397,12 +391,12 @@
             "properties": {
               "uk_UA": {
                 "type": "string",
-                "minLength": 3,
-                "maxLength": 40
+                "minLength": 5,
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
-                "minLength": 3,
+                "minLength": 5,
                 "maxLength": 40
               }
             }
@@ -412,12 +406,12 @@
             "properties": {
               "uk_UA": {
                 "type": "string",
-                "minLength": 3,
-                "maxLength": 40
+                "minLength": 5,
+                "maxLength": 60
               },
               "en_US": {
                 "type": "string",
-                "minLength": 3,
+                "minLength": 5,
                 "maxLength": 40
               }
             }
@@ -428,9 +422,31 @@
           "documentType": {
             "type": "string",
             "enum": [
-              "contractProforma",
+              "notice",
+              "technicalSpecifications",
               "evaluationCriteria",
-              "x_lotInfoEN"
+              "contractProforma",
+              "x_presentation"
+            ]
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "application/pdf",
+              "application/msword",
+              "image/jpeg",
+              "image/png"
+            ]
+          },
+          "language": {
+            "type": "integer",
+            "enum": [
+              0
             ]
           }
         },
