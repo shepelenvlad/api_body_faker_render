@@ -292,8 +292,7 @@
     },
     "eligibilityCriteria": {
       "type": "string",
-      "minLength": 5,
-      "maxLength": 100
+      "const": "eligibilityCriteria"
     },
     "lotId": {
       "example": "UA-PS-11223344-00000"
@@ -326,37 +325,21 @@
             }
           },
           "accountIdentifications": {
-            "type": "array",
-            "minItems": 4,
-            "maxItems": 4,
-            "uniqueBy": "scheme",
-            "requireValues": {
-              "field": "scheme",
-              "values": [
-                "UA-EDR",
-                "UA-IBAN",
-                "UA-MFO",
-                "UA-accountNumber"
-              ]
-            },
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "12345678"
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "example": "UA123456789012345678908765432"
+                      },
+                      "scheme": {
+                        "const": "UA-IBAN"
+                      }
+                    }
+                  }
                 },
-                "scheme": {
-                  "type": "string",
-                  "enum": [
-                    "UA-EDR",
-                    "UA-IBAN",
-                    "UA-MFO",
-                    "UA-accountNumber"
-                  ]
-                }
-              }
-            }
-          },
           "paymentPurpose": {
             "type": "object",
             "properties": {
@@ -414,10 +397,24 @@
                   "const": "CPVS"
                 },
                 "id": {
-                  "type": "string",
-                  "minLength": 3,
-                  "maxLength": 10
-                }
+                      "type": "string",
+                      "enum": [
+                          "AA01-1",
+                          "AA02-4",
+                          "AA03-7",
+                          "AA04-0",
+                          "AA05-3",
+                          "AA06-6",
+                          "AA07-9",
+                          "AA08-2",
+                          "AA09-5",
+                          "AA10-8",
+                          "AA11-1",
+                          "AA12-4",
+                          "AA13-7",
+                          "AA14-0"
+                        ]
+                      }
               }
             }
           },

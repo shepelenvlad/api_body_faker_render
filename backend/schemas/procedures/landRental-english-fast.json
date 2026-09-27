@@ -473,7 +473,7 @@
     "items": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 3,
+      "maxItems": 1,
       "items": {
         "type": "object",
         "properties": {
@@ -575,8 +575,9 @@
           },
           "additionalClassifications": {
             "type": "array",
-            "minItems": 1,
-            "maxItems": 3,
+            "minItems": 2,
+            "maxItems": 2,
+            "uniqueBy": "scheme",
             "items": {
               "type": "object",
               "properties": {
@@ -586,11 +587,168 @@
                     "CVZU",
                     "kvtspz"
                   ]
-                },
-                "id": {
-                  "type": "string",
-                  "minLength": 2,
-                  "maxLength": 6
+                }
+              },
+              "if": {
+                "properties": {
+                  "scheme": {
+                    "const": "CVZU"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "001.00",
+                      "001.01",
+                      "001.02",
+                      "001.03"
+                    ]
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "01",
+                      "01.01",
+                      "01.02",
+                      "01.03",
+                      "01.04",
+                      "01.05",
+                      "01.06",
+                      "01.07",
+                      "01.08",
+                      "01.09",
+                      "01.10",
+                      "01.11",
+                      "01.12",
+                      "01.13",
+                      "01.14",
+                      "02",
+                      "02.01",
+                      "02.02",
+                      "02.03",
+                      "02.04",
+                      "02.05",
+                      "02.06",
+                      "02.07",
+                      "02.08",
+                      "02.09",
+                      "02.10",
+                      "03",
+                      "03.01",
+                      "03.02",
+                      "03.03",
+                      "03.04",
+                      "03.05",
+                      "03.06",
+                      "03.07",
+                      "03.08",
+                      "03.09",
+                      "03.10",
+                      "03.11",
+                      "03.12",
+                      "03.13",
+                      "03.14",
+                      "03.15",
+                      "03.16",
+                      "03.17",
+                      "04",
+                      "04.01",
+                      "04.02",
+                      "04.03",
+                      "04.04",
+                      "04.05",
+                      "04.06",
+                      "04.07",
+                      "04.08",
+                      "04.09",
+                      "04.10",
+                      "04.11",
+                      "05",
+                      "06",
+                      "06.01",
+                      "06.02",
+                      "06.03",
+                      "06.04",
+                      "07",
+                      "07.01",
+                      "07.02",
+                      "07.03",
+                      "07.04",
+                      "07.05",
+                      "08",
+                      "08.01",
+                      "08.02",
+                      "08.03",
+                      "08.04",
+                      "09",
+                      "09.01",
+                      "09.02",
+                      "09.03",
+                      "10",
+                      "10.01",
+                      "10.02",
+                      "10.03",
+                      "10.04",
+                      "10.05",
+                      "10.06",
+                      "10.07",
+                      "10.08",
+                      "10.09",
+                      "10.10",
+                      "10.11",
+                      "10.12",
+                      "11",
+                      "11.01",
+                      "11.02",
+                      "11.03",
+                      "11.04",
+                      "11.05",
+                      "12",
+                      "12.01",
+                      "12.02",
+                      "12.03",
+                      "12.04",
+                      "12.05",
+                      "12.06",
+                      "12.07",
+                      "12.08",
+                      "12.09",
+                      "12.10",
+                      "12.11",
+                      "13",
+                      "13.01",
+                      "13.02",
+                      "13.03",
+                      "13.04",
+                      "13.05",
+                      "14",
+                      "14.01",
+                      "14.02",
+                      "14.03",
+                      "15",
+                      "15.01",
+                      "15.02",
+                      "15.03",
+                      "15.04",
+                      "15.05",
+                      "15.06",
+                      "15.07",
+                      "15.08",
+                      "15.09",
+                      "15.10",
+                      "16.00",
+                      "17.00",
+                      "18.00",
+                      "19.00"
+                    ]
+                  }
                 }
               }
             }
@@ -628,31 +786,76 @@
                   "municipal"
                 ]
               },
-              "encumbrances": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 60
-              },
               "hasEncumbrances": {
                 "type": "boolean"
-              },
-              "jointOwnership": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 60
               },
               "hasJointOwnership": {
                 "type": "boolean"
               },
-              "utilitiesAvailability": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 60
-              },
               "hasUtilitiesAvailability": {
                 "type": "boolean"
               }
-            }
+            },
+            "conditionals": [
+              {
+                "if": {
+                  "properties": {
+                    "hasEncumbrances": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "encumbrances": {
+                      "type": "string",
+                      "enum": [
+                        "collateral",
+                        "lease",
+                        "arrest",
+                        "other"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "hasJointOwnership": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "jointOwnership": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 80
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "hasUtilitiesAvailability": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "utilitiesAvailability": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 80
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         "required": [
@@ -663,8 +866,8 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "uniqueBy": "documentType",
       "items": {
         "type": "object",
@@ -712,7 +915,8 @@
               "technicalSpecifications",
               "evaluationCriteria",
               "contractProforma",
-              "x_presentation"
+              "illustration",
+              "clarifications"
             ]
           },
           "index": {

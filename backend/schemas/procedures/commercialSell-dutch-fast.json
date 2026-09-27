@@ -639,7 +639,7 @@
   "else": {
     "properties": {
       "previousAuctionId": {
-        "example": "CLD001-UA-20241119-37144"
+        "example": "UA-PS-1122-33-44-000000-0"
       },
       "discount": {
         "type": "object",

@@ -22,6 +22,15 @@
   нет записи для этого значения — token остаётся тем, что уже сгенерировала
   схема (const/faker), т.е. это override, а не обязательная замена.
 
+Жёстко закодированные пересчёты полей после генерации (не выразимы через
+JSON Schema, т.к. зависят от значения соседнего поля на этом же уровне):
+- discount.previousAuctionValue.amount > value.amount (_fix_discount_amount)
+- discount убирается целиком, если tenderAttempts == 1 (_fix_discount_tender_attempts)
+- dateTill пересчитывается позже dateFrom (_fix_date_range)
+- value.amount * 0.01 - 1 <= minimalStep.amount <= value.amount * 0.01 + 1,
+  но ТОЛЬКО для sellingMethod in {landArrested-english-fast,
+  landArrested-priorityEnglish-fast} (_fix_minimal_step)
+
 Ограничение v1: $ref / $defs не резолвятся. Если понадобится — легко добавить
 resolve_ref() и прокидывать корневую схему вглубь рекурсии.
 """
@@ -164,6 +173,39 @@ def _fix_discount_amount(obj: dict) -> None:
     if not isinstance(base_amount, (int, float)):
         return
     prev["amount"] = round(base_amount + random.uniform(50, 5000), 2)
+
+
+_LAND_MINIMAL_STEP_SELLING_METHODS = {
+    "landArrested-english-fast",
+    "landArrested-priorityEnglish-fast",
+    "landRental-english-fast"
+}
+
+
+def _fix_minimal_step(obj: dict) -> None:
+    """Изолированный пересчёт ТОЛЬКО для landArrested-english-fast и
+    landArrested-priorityEnglish-fast:
+    value.amount * 0.01 - 1 <= minimalStep.amount <= value.amount * 0.01 + 1.
+    Специально ограничено проверкой sellingMethod, а не просто наличием
+    ключей \"value\"/\"minimalStep\" на одном уровне — у других процедур
+    (commercialSell-*, commercialPropertyLease-* и т.д.) minimalStep имеет
+    свои независимые minimum/maximum, никак не связанные с этой формулой,
+    и их трогать нельзя."""
+    if obj.get("sellingMethod") not in _LAND_MINIMAL_STEP_SELLING_METHODS:
+        return
+    value = obj.get("value")
+    minimal_step = obj.get("minimalStep")
+    if not isinstance(value, dict) or not isinstance(minimal_step, dict):
+        return
+    base_amount = value.get("amount")
+    if not isinstance(base_amount, (int, float)) or "amount" not in minimal_step:
+        return
+    center = base_amount * 0.01
+    lower_bound = max(0.01, center - 1)
+    upper_bound = center + 1
+    if lower_bound > upper_bound:
+        lower_bound = upper_bound
+    minimal_step["amount"] = round(random.uniform(lower_bound, upper_bound), 2)
 
 
 def _fix_date_range(obj: dict) -> None:
@@ -325,6 +367,7 @@ def generate_from_schema(schema: dict, field_name: str = "") -> Any:
         _fix_date_range(result)
         _fix_discount_tender_attempts(result)
         _fix_discount_amount(result)
+        _fix_minimal_step(result)
         return result
 
     if schema_type == "array":

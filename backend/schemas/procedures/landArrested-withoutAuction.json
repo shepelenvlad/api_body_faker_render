@@ -172,9 +172,11 @@
         "type": "object",
         "properties": {
           "statementID": {
-            "type": "integer",
-            "minimum": 100000,
-            "maximum": 9999999
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "minLength": 6,
+            "maxLength": 8,
+            "example": "1234567"
           },
           "restrictionDate": {
             "type": "string",
@@ -889,8 +891,8 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "uniqueBy": "documentType",
       "items": {
         "type": "object",
@@ -934,11 +936,9 @@
           "documentType": {
             "type": "string",
             "enum": [
-              "notice",
               "technicalSpecifications",
-              "evaluationCriteria",
               "contractProforma",
-              "x_presentation"
+              "illustration"
             ]
           },
           "index": {

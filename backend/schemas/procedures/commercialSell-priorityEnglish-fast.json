@@ -573,7 +573,7 @@
     "tenderAttempts": {
       "type": "integer",
       "enum": [
-        1,
+        2,
         2
       ]
     },
@@ -630,11 +630,65 @@
                   ]
                 },
                 "id": {
-                  "type": "string",
-                  "minLength": 3,
-                  "maxLength": 10
+                  "type": "string"
                 }
-              }
+              },
+              "conditionals": [
+                {
+                  "if": {
+                    "properties": {
+                      "scheme": {
+                        "const": "CVZU"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "001.00",
+                          "001.01",
+                          "001.02",
+                          "001.03"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "scheme": {
+                        "const": "CPVS"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "AA01-1",
+                          "AA02-4",
+                          "AA03-7",
+                          "AA04-0",
+                          "AA05-3",
+                          "AA06-6",
+                          "AA07-9",
+                          "AA08-2",
+                          "AA09-5",
+                          "AA10-8",
+                          "AA11-1",
+                          "AA12-4",
+                          "AA13-7",
+                          "AA14-0"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             }
           },
           "unit": {
@@ -902,8 +956,8 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "uniqueBy": "documentType",
       "items": {
         "type": "object",
@@ -951,7 +1005,8 @@
               "technicalSpecifications",
               "evaluationCriteria",
               "contractProforma",
-              "x_presentation"
+              "x_presentation",
+              "illustration"
             ]
           },
           "index": {

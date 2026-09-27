@@ -1,10 +1,10 @@
 {
-  "title": "Commercial Sell — Dutch Fast",
-  "description": "Продаж комерційної нерухомості, голландський аукціон (commercialSell-dutch-fast)",
+  "title": "Commercial Sell — Infinity Fast",
+  "description": "Продаж комерційної нерухомості, голландський аукціон (commercialSell-infinity-fast)",
   "type": "object",
   "properties": {
     "sellingMethod": {
-      "const": "commercialSell-dutch-fast"
+      "const": "commercialSell-infinity-fast"
     },
     "auctionPeriod": {
       "type": "object",

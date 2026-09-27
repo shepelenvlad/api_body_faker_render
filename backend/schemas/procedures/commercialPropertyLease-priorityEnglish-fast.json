@@ -396,11 +396,17 @@
             "properties": {
               "startDate": {
                 "type": "string",
-                "format": "date-time"
+                "relativeHours": {
+                  "min": 24,
+                  "max": 72
+                }
               },
               "endDate": {
                 "type": "string",
-                "format": "date-time"
+                "relativeHours": {
+                  "min": 80,
+                  "max": 120
+                }
               },
               "weekdays": {
                 "type": "array",
@@ -640,32 +646,6 @@
       "type": "string",
       "example": "P2Y11M"
     },
-    "discount": {
-      "type": "object",
-      "properties": {
-        "previousAuctionValue": {
-          "type": "object",
-          "properties": {
-            "currency": {
-              "const": "UAH"
-            },
-            "amount": {
-              "type": "number",
-              "minimum": 100,
-              "maximum": 500000
-            }
-          }
-        },
-        "discountPercent": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 90
-        },
-        "discount": {
-          "type": "boolean"
-        }
-      }
-    },
     "guarantee": {
       "type": "object",
       "properties": {
@@ -698,9 +678,6 @@
         1,
         2
       ]
-    },
-    "previousAuctionId": {
-      "example": "CLD001-UA-20241119-37144"
     },
     "items": {
       "type": "array",
@@ -739,24 +716,75 @@
           },
           "additionalClassifications": {
             "type": "array",
-            "minItems": 0,
-            "maxItems": 2,
+            "minItems": 2,
+            "maxItems": 4,
             "items": {
               "type": "object",
               "properties": {
                 "scheme": {
                   "type": "string",
                   "enum": [
-                    "CPVS",
-                    "CVZU"
+                    "CVZU",
+                    "CPVS"
                   ]
-                },
-                "id": {
-                  "type": "string",
-                  "minLength": 3,
-                  "maxLength": 10
                 }
-              }
+              },
+              "conditionals": [
+                {
+                  "if": {
+                    "properties": {
+                      "scheme": {
+                        "const": "CVZU"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "001.00",
+                          "001.01",
+                          "001.02",
+                          "001.03"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "scheme": {
+                        "const": "CPVS"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "AA01-1",
+                          "AA02-4",
+                          "AA03-7",
+                          "AA04-0",
+                          "AA05-3",
+                          "AA06-6",
+                          "AA07-9",
+                          "0AA08-2",
+                          "AA09-5",
+                          "AA10-8",
+                          "AA11-1",
+                          "AA12-4",
+                          "AA13-7",
+                          "AA14-0"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             }
           },
           "unit": {
@@ -1024,8 +1052,8 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "uniqueBy": "documentType",
       "items": {
         "type": "object",
@@ -1073,7 +1101,8 @@
               "technicalSpecifications",
               "evaluationCriteria",
               "contractProforma",
-              "x_presentation"
+              "x_presentation",
+              "illustration"
             ]
           },
           "index": {
@@ -1103,6 +1132,47 @@
           "documentOf"
         ],
         "tokenFromDocuments": "documentType"
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "tenderAttempts": {
+        "const": 1
+      }
+    }
+  },
+  "then": {},
+  "else": {
+    "properties": {
+      "previousAuctionId": {
+        "example": "CLE001-UA-20210915-76732"
+      },
+      "discount": {
+        "type": "object",
+        "properties": {
+          "discount": {
+            "type": "boolean"
+          },
+          "discountPercent": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 90
+          },
+          "previousAuctionValue": {
+            "type": "object",
+            "properties": {
+              "currency": {
+                "const": "UAH"
+              },
+              "amount": {
+                "type": "number",
+                "minimum": 100,
+                "maximum": 500000
+              }
+            }
+          }
+        }
       }
     }
   },

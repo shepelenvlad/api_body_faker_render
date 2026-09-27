@@ -1,10 +1,10 @@
 {
-  "title": "Legitimate Property Lease — English Fast",
-  "description": "Лот оренди майна (legitimatePropertyLease-english-fast)",
+  "title": "Legitimate Property Lease — Priority English Fast",
+  "description": "Лот оренди майна (legitimatePropertyLease-priorityEnglish-fast)",
   "type": "object",
   "properties": {
     "sellingMethod": {
-      "const": "legitimatePropertyLease-english-fast"
+      "const": "legitimatePropertyLease-priorityEnglish-fast"
     },
     "auctionPeriod": {
       "type": "object",
