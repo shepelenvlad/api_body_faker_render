@@ -631,10 +631,9 @@
     "valuePeriod": {
       "type": "string",
       "enum": [
-        "day",
         "month",
-        "quarter",
-        "year"
+        "day",
+        "hour"
       ]
     },
     "leaseDuration": {

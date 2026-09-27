@@ -509,126 +509,6 @@
               },
               "hasUtilitiesAvailability": {
                 "type": "boolean"
-              },
-              "quantityAndNomenclature": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 100
-              },
-              "workplacesQuantity": {
-                "type": "integer",
-                "minimum": 1,
-                "maximum": 500
-              },
-              "buildingsInformation": {
-                "type": "string",
-                "minLength": 15,
-                "maxLength": 150
-              },
-              "landPlotInformation": {
-                "type": "string",
-                "minLength": 15,
-                "maxLength": 120
-              },
-              "mainObligations": {
-                "type": "string",
-                "minLength": 20,
-                "maxLength": 200
-              },
-              "landProps": {
-                "type": "object",
-                "properties": {
-                  "landArea": {
-                    "type": "number",
-                    "minimum": 1,
-                    "maximum": 1000
-                  },
-                  "cadastralNumber": {
-                    "type": "string"
-                  },
-                  "ownershipType": {
-                    "type": "string",
-                    "enum": [
-                      "state",
-                      "private",
-                      "municipal",
-                      "compatible",
-                      "unknown"
-                    ]
-                  },
-                  "landIntendedUse": {
-                    "type": "string",
-                    "minLength": 10,
-                    "maxLength": 80
-                  },
-                  "hasEncumbrances": {
-                    "type": "boolean"
-                  },
-                  "hasJointOwnership": {
-                    "type": "boolean"
-                  },
-                  "hasUtilitiesAvailability": {
-                    "type": "boolean"
-                  }
-                },
-                "conditionals": [
-                  {
-                    "if": {
-                      "properties": {
-                        "hasEncumbrances": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "encumbrances": {
-                          "type": "string",
-                          "enum": [
-                            "arrest",
-                            "otherEncumbrances"
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "if": {
-                      "properties": {
-                        "hasJointOwnership": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "jointOwnership": {
-                          "type": "string",
-                          "minLength": 10,
-                          "maxLength": 80
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "if": {
-                      "properties": {
-                        "hasUtilitiesAvailability": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "utilitiesAvailability": {
-                          "type": "string",
-                          "minLength": 10,
-                          "maxLength": 80
-                        }
-                      }
-                    }
-                  }
-                ]
               }
             },
             "conditionals": [
@@ -696,8 +576,8 @@
               "registrationStatus": {
                 "type": "string",
                 "enum": [
+                  "properlyRegistered",
                   "registrationIsNotRequired",
-                  "registered",
                   "notRegistered"
                 ]
               },
@@ -859,8 +739,8 @@
     },
     "documents": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 3,
+      "maxItems": 3,
       "uniqueBy": "documentType",
       "items": {
         "type": "object",
@@ -904,11 +784,9 @@
           "documentType": {
             "type": "string",
             "enum": [
-              "notice",
+              "illustration",
               "technicalSpecifications",
-              "evaluationCriteria",
-              "contractProforma",
-              "x_presentation"
+              "digitalSignature"
             ]
           },
           "index": {
@@ -937,7 +815,26 @@
           "title",
           "documentOf"
         ],
-        "tokenFromDocuments": "documentType"
+        "tokenFromDocuments": "documentType",
+        "conditionals": [
+          {
+            "if": {
+              "properties": {
+                "documentType": {
+                  "const": "digitalSignature"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "relatedDocument": {
+                  "type": "string",
+                  "example": "8f394926f8be4d4184cd950fcc8e442f"
+                }
+              }
+            }
+          }
+        ]
       }
     }
   },
@@ -947,5 +844,20 @@
     "title",
     "value",
     "items"
-  ]
+  ],
+  "if": {
+    "properties": {
+      "tenderAttempts": {
+        "const": 1
+      }
+    }
+  },
+  "then": {},
+  "else": {
+    "properties": {
+      "previousAuctionId": {
+        "example": "UA-PS-1122-33-44-000000-0"
+      }
+    }
+  }
 }

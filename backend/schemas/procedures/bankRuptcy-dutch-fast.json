@@ -752,10 +752,11 @@
               "locationInBuilding": {
                 "type": "string",
                 "enum": [
-                  "attic",
+                  "aboveGround",
+                  "pedimental",
                   "basement",
-                  "groundFloor",
-                  "upperFloor"
+                  "technical",
+                  "attic"
                 ]
               },
               "floors": {
@@ -870,7 +871,8 @@
               "technicalSpecifications",
               "evaluationCriteria",
               "contractProforma",
-              "x_presentation"
+              "x_presentation",
+              "illustration"
             ]
           },
           "index": {

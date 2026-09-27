@@ -599,13 +599,47 @@
                     "CVZU",
                     "kvtspz"
                   ]
-                },
-                "id": {
-                  "type": "string",
-                  "minLength": 4,
-                  "maxLength": 6
                 }
-              }
+              },
+              "conditionals": [
+                {
+                  "if": { "properties": { "scheme": { "const": "CVZU" } } },
+                  "then": {
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "001.00",
+                          "001.01",
+                          "001.02",
+                          "001.03"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": { "properties": { "scheme": { "const": "kvtspz" } } },
+                  "then": {
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "01.01",
+                          "01.02",
+                          "01.03",
+                          "01.04",
+                          "01.05",
+                          "01.06",
+                          "01.07",
+                          "01.08",
+                          "01.13"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             }
           },
           "unit": {
@@ -801,7 +835,8 @@
               "technicalSpecifications",
               "evaluationCriteria",
               "contractProforma",
-              "x_presentation"
+              "x_presentation",
+              "illustration"
             ]
           },
           "index": {
@@ -836,7 +871,7 @@
     "minNumberOfQualifiedBids": {
       "type": "integer",
       "minimum": 1,
-      "maximum": 2
+      "maximum": 1
     },
     "minimalStep": {
       "type": "object",

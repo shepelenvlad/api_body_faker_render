@@ -765,9 +765,10 @@
               "ownershipType": {
                 "type": "string",
                 "enum": [
-                  "private",
                   "state",
-                  "communal",
+                  "private",
+                  "municipal",
+                  "compatible",
                   "unknown"
                 ]
               },
@@ -776,35 +777,58 @@
                 "minLength": 10,
                 "maxLength": 60
               },
-              "encumbrances": {
-                "type": "string",
-                "enum": [
-                  "otherEncumbrances",
-                  "collateral",
-                  "lease",
-                  "none"
-                ]
-              },
               "hasEncumbrances": {
                 "type": "boolean"
-              },
-              "jointOwnership": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 60
               },
               "hasJointOwnership": {
                 "type": "boolean"
               },
               "hasUtilitiesAvailability": {
                 "type": "boolean"
-              },
-              "utilitiesAvailability": {
-                "type": "string",
-                "minLength": 10,
-                "maxLength": 60
               }
-            }
+            },
+            "conditionals": [
+              {
+                "if": { "properties": { "hasEncumbrances": { "const": true } } },
+                "then": {
+                  "properties": {
+                    "encumbrances": {
+                      "type": "string",
+                      "enum": [
+                        "arrest",
+                        "collateral",
+                        "restraintsOnAlienation",
+                        "otherEncumbrances"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": { "properties": { "hasJointOwnership": { "const": true } } },
+                "then": {
+                  "properties": {
+                    "jointOwnership": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 60
+                    }
+                  }
+                }
+              },
+              {
+                "if": { "properties": { "hasUtilitiesAvailability": { "const": true } } },
+                "then": {
+                  "properties": {
+                    "utilitiesAvailability": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 60
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         "required": [
@@ -866,7 +890,7 @@
               "technicalSpecifications",
               "evaluationCriteria",
               "contractProforma",
-              "x_presentation"
+              "illustration"
             ]
           },
           "index": {

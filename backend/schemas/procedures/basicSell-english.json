@@ -12,8 +12,8 @@
         "startDate": {
           "type": "string",
           "relativeHours": {
-            "min": 24,
-            "max": 72
+            "min": 240,
+            "max": 288
           }
         }
       },

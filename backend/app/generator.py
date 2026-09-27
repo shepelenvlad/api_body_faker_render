@@ -195,33 +195,46 @@ def _apply_document_token(obj: dict, key_field: str) -> None:
         obj["token"] = tokens[key_value]
 
 
+def _apply_branch(item: dict, matches: bool, then_schema: dict, else_schema: dict | None) -> None:
+    """Applies whichever of then_schema/else_schema currently matches, and -
+    unlike a first-time generation - also removes any property that was only
+    ever defined by the OTHER branch. Without this cleanup, a property added
+    by a "then"/"else" branch during the initial pass can survive even after
+    a later uniqueBy/requireValues reassignment flips the condition the other
+    way (e.g. a "documentType" that was briefly "digitalSignature" during
+    generation, before uniqueBy moved it to "illustration", would otherwise
+    leave a stale "relatedDocument" field behind)."""
+    then_schema = then_schema or {}
+    else_schema = else_schema or {}
+    then_keys = set(then_schema.get("properties", {}).keys())
+    else_keys = set(else_schema.get("properties", {}).keys())
+
+    if matches:
+        for name, sub_schema in then_schema.get("properties", {}).items():
+            item[name] = generate_from_schema(sub_schema, field_name=name)
+        for stale_key in else_keys - then_keys:
+            item.pop(stale_key, None)
+    else:
+        for name, sub_schema in else_schema.get("properties", {}).items():
+            item[name] = generate_from_schema(sub_schema, field_name=name)
+        for stale_key in then_keys - else_keys:
+            item.pop(stale_key, None)
+
+
 def _reapply_conditional(item: dict, schema: dict) -> None:
     """После того как uniqueBy/requireValues вручную поменяли поле, от
     которого зависят if/then/else, conditionals или tokenFromDocuments
     этого же объекта, — пересчитывает зависимые свойства заново (иначе,
     например, documentType поменяется, а token останется от старого типа,
-    сгенерированный ещё до подмены)."""
+    сгенерированный ещё до подмены). Также убирает свойства, добавленные
+    веткой, которая после пересчёта перестала подходить (см. _apply_branch)."""
     if_schema = schema.get("if")
     if if_schema:
-        if _condition_matches(item, if_schema):
-            then_schema = schema.get("then", {})
-            for name, sub_schema in then_schema.get("properties", {}).items():
-                item[name] = generate_from_schema(sub_schema, field_name=name)
-        elif "else" in schema:
-            else_schema = schema["else"]
-            for name, sub_schema in else_schema.get("properties", {}).items():
-                item[name] = generate_from_schema(sub_schema, field_name=name)
+        _apply_branch(item, _condition_matches(item, if_schema), schema.get("then", {}), schema.get("else"))
 
     for rule in schema.get("conditionals", []):
         rule_if = rule.get("if", {})
-        if _condition_matches(item, rule_if):
-            then_schema = rule.get("then", {})
-            for name, sub_schema in then_schema.get("properties", {}).items():
-                item[name] = generate_from_schema(sub_schema, field_name=name)
-        elif "else" in rule:
-            else_schema = rule["else"]
-            for name, sub_schema in else_schema.get("properties", {}).items():
-                item[name] = generate_from_schema(sub_schema, field_name=name)
+        _apply_branch(item, _condition_matches(item, rule_if), rule.get("then", {}), rule.get("else"))
 
     token_key_field = schema.get("tokenFromDocuments")
     if token_key_field:

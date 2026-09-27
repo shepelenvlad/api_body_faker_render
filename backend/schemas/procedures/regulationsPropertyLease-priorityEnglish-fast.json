@@ -627,10 +627,9 @@
     "valuePeriod": {
       "type": "string",
       "enum": [
-        "hour",
-        "day",
         "month",
-        "year"
+        "day",
+        "hour"
       ]
     },
     "leaseDuration": {
@@ -901,10 +900,11 @@
               "locationInBuilding": {
                 "type": "string",
                 "enum": [
-                  "attic",
+                  "aboveGround",
+                  "pedimental",
                   "basement",
-                  "groundFloor",
-                  "upperFloor"
+                  "technical",
+                  "attic"
                 ]
               },
               "floors": {
